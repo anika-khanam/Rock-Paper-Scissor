@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(to right, #ff8a00, #e52e71);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+  }
+  
+  .cta-buttons button {
+    background-color: white;
+    color: #e52e71;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-buttons button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Game Overview Section */
+  .game-overview {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .game-overview h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .game-overview ul {
+    list-style-type: none;
+    font-size: 1.5rem;
+  }
+  
+  .game-overview .game-icons img {
+    width: 100px;
+    margin: 10px;
+  }
+  
+  /* Feature Section (Leaderboard & Profile) */
+  .feature-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 20px;
+    background-color: white;
+  }
+  
+  .feature-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .feature-text {
+    width: 50%;
+    padding: 20px;
+  }
+  
+  .feature-image img {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .reverse {
+    flex-direction: row-reverse;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
