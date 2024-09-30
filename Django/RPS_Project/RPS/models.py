@@ -1,7 +1,7 @@
 from django.db import models
 
 class playerAccount(models.Model):
-    userName = models.CharField(max_length=127)
+    userName = models.CharField(max_length=127,unique=True)
     email = models.EmailField(max_length=255)
     dateJoined = models.DateField(auto_now_add=True)
 
