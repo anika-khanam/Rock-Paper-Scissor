@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import InputSelector from './InputSelector';
 import axios from 'axios'
 
@@ -13,6 +13,8 @@ function GameComponent() {
             try{
                 const resp = await axios.post(apiURL, choice)
                 console.log(resp);
+                console.log(resp.data);
+                // Expect response with opponent choice
                 if (resp.status == 200){
                     setStatus('Success');
                 }
