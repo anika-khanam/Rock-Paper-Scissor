@@ -14,7 +14,7 @@ class PlayerAccountList(generics.ListCreateAPIView):
         return queryset
 
 class PlayerAccountDetail(generics.RetrieveDestroyAPIView):
-    serializer_class = PlayerAccount
+    serializer_class = PlayerAccountSerializer
     queryset = PlayerAccount.objects.all()
 
 class PlayerList(generics.ListCreateAPIView):
@@ -24,6 +24,10 @@ class PlayerList(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = Player.objects.all()
         return queryset
+
+class PlayerDetail(generics.RetrieveDestroyAPIView):
+    serializer_class = PlayerSerializer
+    queryset = Player.objects.all()
 
 # Create your views here.
 class GameRound(APIView):
