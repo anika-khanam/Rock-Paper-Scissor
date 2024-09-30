@@ -28,6 +28,6 @@ urlpatterns = [
     path('accounts/',PlayerAccountList.as_view()),
     path('accounts/<int:pk>/',PlayerAccountDetail.as_view()),
     path('players/',PlayerList.as_view()),
-    path('players/<int:pk>/',PlayerDetail.as_view())
-    path('gameround/', GameRound.as_view())
+    path('players/<int:pk>/',PlayerDetail.as_view()),
+    path('gameround/', GameRound.as_view()),
 ]
