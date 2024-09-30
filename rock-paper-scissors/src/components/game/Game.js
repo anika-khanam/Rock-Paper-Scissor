@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InputSelector from './InputSelector';
+import axios from 'axios'
 
 function GameComponent() {
+    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState('');
+    const apiURL = '';
+
+    const submitSelection = (choice) => {
+        const axPost = async () => {
+            setLoading(true);
+            try{
+                const resp = await axios.post(apiURL, choice)
+                console.log(resp);
+                if (resp.status == 200){
+                    setStatus('Success');
+                }
+            }
+            catch(err){
+                console.error(err);
+                setStatus("Failed");
+            }
+            setLoading(false);
+        }
+        axPost();
+    }
+
     return ( 
-        <InputSelector />
+        <InputSelector submitCallback={submitSelection}/>
     );
 }
 

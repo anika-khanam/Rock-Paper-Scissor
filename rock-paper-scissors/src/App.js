@@ -1,8 +1,12 @@
 import React from 'react';
 import './styles.css';
 import rockPaperScissorsImg from './rock-paper-scissors.png';
+import GameComponent from './components/game/Game';
 
 const App = () => {
+  return (
+    <GameComponent />
+  )
   return (
     <div className="App">
 
