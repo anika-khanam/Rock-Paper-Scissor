@@ -1,22 +1,27 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import playerAccount,player
-from .serializers import playerAccountSerializer,playerSerializer
+from .models import PlayerAccount,Player
+from .serializers import PlayerAccountSerializer,PlayerSerializer
 from django.shortcuts import render
 
-class playerAccountList(generics.ListCreateAPIView):
-    serializer_class = playerAccountSerializer
+class PlayerAccountList(generics.ListCreateAPIView):
+    serializer_class = PlayerAccountSerializer
 
     def get_queryset(self):
-        queryset = playerAccount.objects.all()
+        queryset = PlayerAccount.objects.all()
         return queryset
 
-class playerList(generics.ListCreateAPIView):
-    serializer_class = playerSerializer
+class PlayerAccountDetail(generics.RetrieveDestroyAPIView):
+    serializer_class = PlayerAccount
+    queryset = PlayerAccount.objects.all()
+
+class PlayerList(generics.ListCreateAPIView):
+    serializer_class = PlayerSerializer
+    queryset = Player.objects.all()
 
     def get_queryset(self):
-        queryset = player.objects.all()
+        queryset = Player.objects.all()
         return queryset
 
 # Create your views here.
