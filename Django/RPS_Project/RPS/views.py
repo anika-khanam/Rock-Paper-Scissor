@@ -1,6 +1,9 @@
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from .models import PlayerAccount,Player
 from .serializers import PlayerAccountSerializer,PlayerSerializer
+from django.shortcuts import render
 
 class PlayerAccountList(generics.ListCreateAPIView):
     serializer_class = PlayerAccountSerializer
@@ -26,3 +29,6 @@ class PlayerDetail(generics.RetrieveDestroyAPIView):
     queryset = Player.objects.all()
 
 # Create your views here.
+class GameRound(APIView):
+    def post(self, request):
+        return Response(random.choice(["rock","paper","scissors"]))

@@ -16,16 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from .views import PlayerAccountList,PlayerAccountDetail,PlayerList,PlayerDetail
+from rest_framework.routers import DefaultRouter
+from .views import PlayerAccountList,PlayerAccountDetail,PlayerList,PlayerDetail, GameRound
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/',playerAccountList.as_view()),
     path('',PlayerAccountList.as_view()),
     path('accounts/',PlayerAccountList.as_view()),
     path('accounts/<int:pk>/',PlayerAccountDetail.as_view()),
     path('players/',PlayerList.as_view()),
     path('players/<int:pk>/',PlayerDetail.as_view())
-    
+    path('gameround/', GameRound.as_view())
 ]
