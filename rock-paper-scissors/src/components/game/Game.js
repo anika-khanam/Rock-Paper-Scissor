@@ -5,7 +5,7 @@ import axios from 'axios'
 function GameComponent() {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState('');
-    const apiURL = '';
+    const apiURL = 'http://127.0.0.1:8000/endpoints/gameround/';
 
     const submitSelection = (choice) => {
         const axPost = async () => {
