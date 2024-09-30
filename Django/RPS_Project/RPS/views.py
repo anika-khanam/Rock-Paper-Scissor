@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from .models import PlayerAccount,Player
 from .serializers import PlayerAccountSerializer,PlayerSerializer
 from django.shortcuts import render
-import random
+import random, time, json
 
 class PlayerAccountList(generics.ListCreateAPIView):
     serializer_class = PlayerAccountSerializer
@@ -33,7 +33,15 @@ class PlayerDetail(generics.RetrieveDestroyAPIView):
 class GameRound(APIView):
     def post(self, request):
         print(self.pretty_request(request))
-        return Response(random.choice(["rock","paper","scissors"]))
+        req_json = json.loads(request.body.decode('utf-8'))
+        if req_json["wait"] and random.random() < 0.5:
+            time.sleep(10)
+            resp = Response(random.choice(["rock","paper","scissors"]), 200)
+        elif random.random() < 0.5:
+            resp = Response(random.choice(["rock","paper","scissors"]), 200)
+        else:
+            resp = Response(None, 202)
+        return resp
 
     def pretty_request(self, request):
         headers = ''
