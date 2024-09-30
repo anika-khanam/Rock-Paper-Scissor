@@ -17,11 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
-<<<<<<< HEAD
-from .views import PlayerAccountList,PlayerAccountDetail, GameRound
-=======
 from .views import PlayerAccountList,PlayerAccountDetail,PlayerList,PlayerDetail, GameRound
->>>>>>> refs/remotes/origin/main
 
 
 
