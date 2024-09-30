@@ -17,12 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
-from .views import playerAccountList
+from .views import playerAccountList, GameRound
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/',playerAccountList.as_view())
-    
+    path('accounts/',playerAccountList.as_view()),
+    path('gameround/', GameRound.as_view())
 ]
