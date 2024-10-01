@@ -1,10 +1,5 @@
-# from django.contrib.auth.models import AbstractUser
-# from django.db import models
+from django.db import models
 
-<<<<<<< HEAD
-# class PlayerAccount(AbstractUser):
-#     pass
-=======
 class PlayerAccount(models.Model):
     userName = models.CharField(max_length=127,unique=True)
     email = models.EmailField(max_length=255)
@@ -43,7 +38,3 @@ class GameRoom(models.Model):
 
       def room_full(self):
         return self.p1ID is not None and self.p1ID is not None
-
-
-
->>>>>>> 8fe946c00ae4d4718a536946f46316c9482d8cbe
