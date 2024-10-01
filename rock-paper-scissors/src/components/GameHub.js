@@ -50,10 +50,15 @@ function GameHub() {
         axPost();
     }
 
+    const finishGame = () => {
+        setGameID(null);
+        setRoomID(null);
+    }
+
     return ( 
         <>
         
-            {gameID != null ? <GameComponent gameID={gameID} playerID={player_id}/> : roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : <>
+            {gameID != null ? <GameComponent gameID={gameID} playerID={player_id} completionCallback={finishGame}/> : roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : <>
             <button onClick={ createGame }>Create Room</button>
             <label htmlFor='roomIDInput'>Room ID</label>
             <input id='roomIDInput' onChange={(e) => setJoinId(e.target.value)}></input>

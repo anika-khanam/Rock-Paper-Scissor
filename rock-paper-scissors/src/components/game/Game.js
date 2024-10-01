@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputSelector from './InputSelector';
 import axios from 'axios'
 
@@ -14,7 +14,7 @@ function RPSwinner(choices){
     let a = choices[0][0].toLowerCase();
     let b = choices[1][0].toLowerCase();
 
-    if (a == b){
+    if (a === b){
         return "Draw";
     }
     if (a === "r" && b === "p"){ return "Lose"; }
@@ -25,7 +25,7 @@ function RPSwinner(choices){
     if (a === "s" && b === "p"){ return "Win"; }
 }
 
-function GameComponent({ gameID, playerID }) {
+function GameComponent({ gameID, playerID, completionCallback }) {
     const [status, setStatus] = useState('');
     const [choices, setChoices] = useState([null, null]);
     const [round, setRound] = useState(1);
@@ -61,6 +61,26 @@ function GameComponent({ gameID, playerID }) {
         axPost();
     }
 
+    const terminateGame = () => {
+        console.log("Ending Game");
+
+        const axPost = async () => {
+            try{
+                const resp = await axios.post(`http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/finalize`, {"wins": wins, "losses": (round - wins)})
+                if (resp.status === 200) {
+                    console.log("Updated server records");
+                    completionCallback();
+                }
+            }
+            catch(err){
+                console.error(err);
+                setStatus("Failed");
+            }
+        }
+
+        axPost();
+    }
+
     useEffect(() => {
         let pollingGet;
 
@@ -83,8 +103,25 @@ function GameComponent({ gameID, playerID }) {
             }
         }
 
-        if (statCode == StatusNum.PollingSubmit){
+        if (statCode === StatusNum.PollingSubmit){
             pollingGet = setInterval(axGet, 1000);
+        }
+
+        if (statCode === StatusNum.ResultDisplay){
+            if (RPSwinner(choices) == "Win") { setWins(wins + 1); }
+            if (round - wins <= 2){
+                // Another Round
+                setTimeout(() => {
+                    setRound(round + 1)
+                    setStatCode(StatusNum.AwaitingSubmit)
+                }, 3000);
+            }
+            else{
+                // Game End
+                setTimeout(() => {
+                    setStatCode(StatusNum.GameEnd)
+                }, 3000);
+            }
         }
 
         return () => clearInterval(pollingGet)
@@ -114,6 +151,7 @@ function GameComponent({ gameID, playerID }) {
                 return (
                     <>
                         <p>{wins === 3 ? "You Won the Match" : "You Lost the Match"}</p>
+                        <button onClick={terminateGame}>Return to Menu</button>
                     </>
                 )
             default:
@@ -124,6 +162,7 @@ function GameComponent({ gameID, playerID }) {
     return (
         <>
             <p>Round {round} (Best of 5)</p>
+            <p>Wins: {wins}</p>
             {renderBody()}
         </>
         
