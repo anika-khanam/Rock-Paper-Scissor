@@ -17,5 +17,15 @@ class Player(models.Model):
         def __str__(self):
             return self.playerName
 
+class Room(models.Model):
+      publicCode = models.charField(max_length=5)
+      isPrivate = models.BooleanField()
+      playerOne = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerOne')
+      playerTwo =  models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerTwo')
+
+      def __str__(self) :
+            return self.publicCode
+
+    
 
 # Create your models here.

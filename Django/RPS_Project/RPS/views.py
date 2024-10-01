@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from .models import PlayerAccount,Player
 from .serializers import PlayerAccountSerializer,PlayerSerializer
 from django.shortcuts import render
+import random
 
 class PlayerAccountList(generics.ListCreateAPIView):
     serializer_class = PlayerAccountSerializer
@@ -12,7 +13,7 @@ class PlayerAccountList(generics.ListCreateAPIView):
         queryset = PlayerAccount.objects.all()
         return queryset
 
-class PlayerAccountDetail(generics.RetrieveDestroyAPIView):
+class PlayerAccountDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlayerAccountSerializer
     queryset = PlayerAccount.objects.all()
 
@@ -24,7 +25,7 @@ class PlayerList(generics.ListCreateAPIView):
         queryset = Player.objects.all()
         return queryset
 
-class PlayerDetail(generics.RetrieveDestroyAPIView):
+class PlayerDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
 
