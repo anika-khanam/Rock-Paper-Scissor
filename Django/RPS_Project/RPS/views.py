@@ -48,7 +48,7 @@ class JoinRoom(APIView):
         # Create game now room is full
         game = Game.objects.create(p1ID = room.p1ID, p2ID = player_id)
 
-        room.gameID = game.id
+        room.gameID = game
         room.save()
 
         return Response({"message": "Room joined successfully", "game_id":game.id}, status=201)
