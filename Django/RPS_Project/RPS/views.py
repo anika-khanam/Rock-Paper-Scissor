@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import PlayerAccount,Player,Game,GameRoom
-from .serializers import PlayerAccountSerializer,PlayerSerializer
+from .serializers import PlayerAccountSerializer,PlayerSerializer,LeaderboardSerializer
 from django.shortcuts import render
 import random, time, json
 
@@ -28,6 +28,17 @@ class PlayerList(generics.ListCreateAPIView):
 class PlayerDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
+
+class PlayerLeaderboard(generics.ListAPIView):
+    serializer_class = LeaderboardSerializer
+
+    def get_queryset(self):
+        queryset = Player.objects.order_by('-wins')
+        for idx, player in enumerate(queryset, start=1):
+            player.rank = idx  # Assign rank based on index in ordered queryset
+        
+        return queryset
+
 
 # Create your views here.
 class CreateRoom(APIView):

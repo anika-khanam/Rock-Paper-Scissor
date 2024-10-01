@@ -34,7 +34,7 @@ class GameRoom(models.Model):
       gameID = models.ForeignKey(Game,on_delete=models.SET_NULL,null=True)
 
       def __str__(self) :
-            return self.publicCode
+            return self.roomCode
 
       def room_full(self):
         return self.p1ID is not None and self.p1ID is not None
