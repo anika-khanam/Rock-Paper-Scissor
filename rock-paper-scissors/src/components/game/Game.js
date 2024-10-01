@@ -6,16 +6,18 @@ function GameComponent() {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState('');
     const [choices, setChoices] = useState([null, null]);
-    const apiURL = 'http://127.0.0.1:8000/gameround/';
+    let gameId = 0;
+    let playerId = 0;
+    const apiURL = `http://127.0.0.1:8000/gameround/${gameId}/player/${playerId}/select/`;
 
     const submitSelection = (choice) => {
         setChoices([choice, null]);
-        let data = {"choice": choice, "wait": false}
+
         console.log(choice, typeof(choice))
         const axPost = async () => {
             setLoading(true);
             try{
-                const resp = await axios.post(apiURL, data, {headers: {"Content-Type": "application/json"}})
+                const resp = await axios.post(apiURL, choice)
                 console.log(resp);
                 console.log(resp.data);
                 // Expect response with opponent choice
@@ -36,8 +38,15 @@ function GameComponent() {
         axPost();
     }
 
-    return ( 
-        <InputSelector submitCallback={submitSelection}/>
+    return (
+        <>
+            <InputSelector submitCallback={submitSelection}/>
+            <ul>
+                <li>{ choices }</li>
+                <li>{ status }</li>
+            </ul>
+        </>
+        
     );
 }
 

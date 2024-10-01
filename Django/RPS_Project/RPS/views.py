@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import PlayerAccount,Player
+from .models import PlayerAccount,Player,Game
 from .serializers import PlayerAccountSerializer,PlayerSerializer
 from django.shortcuts import render
 import random, time, json
@@ -31,18 +31,36 @@ class PlayerDetail(generics.RetrieveDestroyAPIView):
 
 # Create your views here.
 class GameRound(APIView):
-    def post(self, request):
-        # Request contains json for game id, player id, player selection
-        print(self.pretty_request(request))
-        req_json = json.loads(request.body.decode('utf-8'))
-        if req_json["wait"] and random.random() < 0.5:
-            time.sleep(10)
-            resp = Response(random.choice(["rock","paper","scissors"]), 200)
-        elif random.random() < 0.5:
-            resp = Response(random.choice(["rock","paper","scissors"]), 200)
+    def post(self, request, game_id, player_id):
+        choice = request.POST.get('choice')
+
+        try:
+            game = Game.objects.get(id=game_id)
+        except Game.DoesNotExist:
+            return Response({'error': 'Game not found'}, status=404)
+
+        # Update the game state based on which player is submitting
+        if game.player_one == player_id:
+            game.player_one_choice = choice
+        elif game.player_two == player_id:
+            game.player_two_choice = choice
         else:
-            resp = Response(None, 202)
-        return resp
+            return Response({'error': 'Invalid player ID'}, status=403)
+
+        # Save the game state
+        game.save()
+
+        # Check if both players have made their choices
+        if game.is_full():
+            # Both players have made their selections
+            return Response({
+                'player_one_choice': game.player_one_choice,
+                'player_two_choice': game.player_two_choice,
+            }, status=200)
+
+        # One player has submitted their choice; wait for the other
+        return Response({'message': 'Waiting for the other player'}, status=202)
+    
 
     def pretty_request(self, request):
         headers = ''

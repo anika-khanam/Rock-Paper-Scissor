@@ -17,5 +17,11 @@ class Player(models.Model):
         def __str__(self):
             return self.playerName
 
+class Game(models.Model):
+    p1ID = models.IntegerField()
+    p2ID = models.IntegerField()
+    p1Choice = models.CharField(max_length=8, blank=True)
+    p2Choice = models.CharField(max_length=8, blank=True)
 
-# Create your models here.
+    def both_guessed(self):
+         return self.p1Choice and self.p2Choice
