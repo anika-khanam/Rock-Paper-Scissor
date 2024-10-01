@@ -4,6 +4,10 @@ import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage/ForgotPasswordPage';
+import './styles.css';
+import rockPaperScissorsImg from './rock-paper-scissors.png';
+import DebugView from './components/DebugView';
+import LeaderBoards from './components/LeaderBoard';
 
 const App = () => {
   return (
