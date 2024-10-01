@@ -16,17 +16,7 @@ class Player(models.Model):
     
         def __str__(self):
             return self.playerName
-
-class Room(models.Model):
-      publicCode = models.charField(max_length=5)
-      isPrivate = models.BooleanField()
-      playerOne = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerOne')
-      playerTwo =  models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerTwo')
-
-      def __str__(self) :
-            return self.publicCode
-
-    
+        
 class Game(models.Model):
     p1ID = models.IntegerField()
     p2ID = models.IntegerField()
@@ -36,4 +26,17 @@ class Game(models.Model):
     def both_guessed(self):
          return self.p1Choice and self.p2Choice
 
-# Create your models here.
+class GameRoom(models.Model):
+      roomCode = models.charField(max_length=5)
+      isPrivate = models.BooleanField()
+      p1ID = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerOne')
+      p2ID =  models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerTwo')
+      gameID = models.ForeignKey(Game,on_delete=models.SET_NULL,null=True)
+
+      def __str__(self) :
+            return self.publicCode
+
+      def room_full(self):
+        return self.p1ID is not None and self.p1ID is not None
+
+

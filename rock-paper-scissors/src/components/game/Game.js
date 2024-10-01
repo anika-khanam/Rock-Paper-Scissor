@@ -19,7 +19,10 @@ function GameComponent() {
             try{
                 const resp = await axios.post(apiURL, choice)
                 console.log(resp);
-                console.log(resp.data);
+                if (resp.status > 202){
+                    console.log(resp.data.error);
+                }
+                
                 // Expect response with opponent choice
                 if (resp.status == 200){
                     setStatus('Success');

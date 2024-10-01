@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import PlayerAccount,Player,Game
+from .models import PlayerAccount,Player,Game,GameRoom
 from .serializers import PlayerAccountSerializer,PlayerSerializer
 from django.shortcuts import render
 import random, time, json
@@ -30,6 +30,29 @@ class PlayerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Player.objects.all()
 
 # Create your views here.
+class CreateRoom(APIView):
+    def post(self, request, player_id):
+        room = GameRoom.objects.create(p1ID=player_id)
+
+        return Response({"message": "Room created successfully", "room_id":room.roomCode}, status=201)
+
+class JoinRoom(APIView):
+    def post(self, request, room_code, player_id):
+        try:
+            room = GameRoom.objects.get(roomCode=room_code)
+        except GameRoom.DoesNotExist:
+            return Response({'error': 'Room not found'}, status=404)
+        
+        room.p2ID = player_id
+
+        # Create game now room is full
+        game = Game.objects.create(p1ID = room.p1ID, p2ID = player_id)
+
+        room.gameID = game.id
+        room.save()
+
+        return Response({"message": "Room joined successfully", "game_id":game.id}, status=201)
+
 class GameRound(APIView):
     def post(self, request, game_id, player_id):
         choice = request.POST.get('choice')
