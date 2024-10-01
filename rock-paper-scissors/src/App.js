@@ -1,11 +1,11 @@
 import React from 'react';
 import './styles.css';
 import rockPaperScissorsImg from './rock-paper-scissors.png';
-import GameComponent from './components/game/Game';
+import DebugView from './components/DebugView';
 
 const App = () => {
   return (
-    <GameComponent />
+    <DebugView />
   )
   return (
     <div className="App">

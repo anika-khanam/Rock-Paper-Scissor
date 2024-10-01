@@ -25,3 +25,13 @@ class Game(models.Model):
 
     def both_guessed(self):
          return self.p1Choice and self.p2Choice
+    
+class GameRoom(models.Model):
+    p1ID = models.IntegerField()
+    p2ID = models.IntegerField(null=True)
+    roomCode = models.AutoField(primary_key=True)
+    gameID = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
+
+    def room_full(self):
+        return self.p1ID is not None and self.p2ID is not None
+

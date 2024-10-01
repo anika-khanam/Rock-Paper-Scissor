@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
-from .views import PlayerAccountList,PlayerAccountDetail,PlayerList,PlayerDetail, GameRound
+from .views import PlayerAccountList,PlayerAccountDetail,PlayerList,PlayerDetail, GameRound,CreateRoom,JoinRoom
 
 
 
@@ -30,4 +30,6 @@ urlpatterns = [
     path('players/',PlayerList.as_view()),
     path('players/<int:pk>/',PlayerDetail.as_view()),
     path('gameround/<int:game_id>/player/<int:player_id>/select/', GameRound.as_view()),
+    path('manageroom/create/<int:player_id>/', CreateRoom.as_view()),
+    path('manageroom/join/<int:room_code>/player/<int:player_id>/', JoinRoom.as_view()),
 ]
