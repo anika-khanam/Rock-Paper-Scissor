@@ -35,4 +35,3 @@ class LeaderboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         fields = '__all__'
-    

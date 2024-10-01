@@ -1,0 +1,50 @@
+.RegistrationPage {
+    text-align: center;
+    padding: 20px;
+
+  }
+  
+  .registration-image {
+    width: 100%; 
+    max-width: 300px; 
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: inline-block; 
+    margin-top: 20px;
+  }
+  
+  table {
+    margin: 0 auto; 
+    border-collapse: collapse;
+  }
+  
+  td {
+    padding: 10px;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #21a1f1;
+  }
+  
+  p {
+    margin-top: 15px;
+  }
+  
