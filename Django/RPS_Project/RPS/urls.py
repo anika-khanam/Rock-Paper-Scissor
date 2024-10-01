@@ -23,7 +23,6 @@ from .views import PlayerAccountList,PlayerAccountDetail,PlayerList,PlayerDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/',PlayerAccountList.as_view()),
     path('',PlayerAccountList.as_view()),
     path('accounts/',PlayerAccountList.as_view()),
     path('accounts/<int:pk>/',PlayerAccountDetail.as_view()),

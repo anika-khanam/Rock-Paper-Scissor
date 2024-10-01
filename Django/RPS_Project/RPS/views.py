@@ -13,7 +13,7 @@ class PlayerAccountList(generics.ListCreateAPIView):
         queryset = PlayerAccount.objects.all()
         return queryset
 
-class PlayerAccountDetail(generics.RetrieveDestroyAPIView):
+class PlayerAccountDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlayerAccountSerializer
     queryset = PlayerAccount.objects.all()
 
@@ -25,7 +25,7 @@ class PlayerList(generics.ListCreateAPIView):
         queryset = Player.objects.all()
         return queryset
 
-class PlayerDetail(generics.RetrieveDestroyAPIView):
+class PlayerDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
 
