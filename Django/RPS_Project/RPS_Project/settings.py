@@ -37,10 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
     'RPS',
+=======
+    'RPS',
+    'rest_framework',
+    'corsheaders'
+>>>>>>> 8fe946c00ae4d4718a536946f46316c9482d8cbe
 ]
 
 # AUTH_USER_MODEL = 'RPS.PlayerAccount'
@@ -60,7 +66,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+<<<<<<< HEAD
     'corsheaders.middleware.CorsMiddleware',
+=======
+    'corsheaders.middleware.CorsMiddleware'
+>>>>>>> 8fe946c00ae4d4718a536946f46316c9482d8cbe
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -89,6 +99,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'RPS_Project.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Database
