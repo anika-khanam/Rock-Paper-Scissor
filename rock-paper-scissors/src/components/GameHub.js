@@ -6,12 +6,12 @@ import WaitOnJoin from './WaitOnJoin';
 function GameHub() {
     const [statusinfo, setStatusinfo] = useState("");
     const [joinId, setJoinId] = useState("");
-    const [player_id, setPlayer_id] = useState("");
     const [roomID, setRoomID] = useState(null);
     const [gameID, setGameID] = useState(null);
 
     const createGame = () => {
         const axPost = async () => {
+            let player_id=0;
             const apiURL = `http://127.0.0.1:8000/manageroom/create/${player_id}/`;
             try{
                 const resp = await axios.post(apiURL)
@@ -32,6 +32,7 @@ function GameHub() {
 
     const joinGame = () => {
         const axPost = async () => {
+            let player_id=0;
             const apiURL = `http://127.0.0.1:8000/manageroom/join/${joinId}/player/${player_id}/`;
             try{
                 const resp = await axios.post(apiURL)
@@ -40,7 +41,7 @@ function GameHub() {
                 if (resp.status == 201){
                     setStatusinfo('Room Joined');
                 }
-                setGameID(resp.data.game_id)
+                setgameID(resp.data.game_id)
             }
             catch(err){
                 console.error(err);
@@ -50,23 +51,16 @@ function GameHub() {
         axPost();
     }
 
-    const finishGame = () => {
-        setGameID(null);
-        setRoomID(null);
-    }
-
     return ( 
         <>
         
-            {gameID != null ? <GameComponent gameID={gameID} playerID={player_id} completionCallback={finishGame}/> : roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : <>
+            {gameID != null ? <GameComponent gameID={gameID}/> : roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : <>
             <button onClick={ createGame }>Create Room</button>
             <label htmlFor='roomIDInput'>Room ID</label>
             <input id='roomIDInput' onChange={(e) => setJoinId(e.target.value)}></input>
-            <label htmlFor='playerIDInput'>Player ID</label>
-            <input id='playerIDInput' onChange={(e) => setPlayer_id(e.target.value)}></input>
             <button onClick={ joinGame }>Join Room</button>
             <span>Status: { statusinfo }</span><br />
-            <span>Room Code: { roomID }</span><br />
+            <span>Room Code: { joincode }</span><br />
             <span>Game ID: { gameID }</span>
         </>}
         </> 
