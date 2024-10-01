@@ -17,12 +17,12 @@ function RPSwinner(choices){
     if (a == b){
         return "Draw";
     }
-    if (a == "r" && b == "p"){ return "Lose"; }
-    if (a == "p" && b == "r"){ return "Win"; }
-    if (a == "s" && b == "r"){ return "Lose"; }
-    if (a == "r" && b == "s"){ return "Win"; }
-    if (a == "p" && b == "s"){ return "Lose"; }
-    if (a == "s" && b == "p"){ return "Win"; }
+    if (a === "r" && b === "p"){ return "Lose"; }
+    if (a === "p" && b === "r"){ return "Win"; }
+    if (a === "s" && b === "r"){ return "Lose"; }
+    if (a === "r" && b === "s"){ return "Win"; }
+    if (a === "p" && b === "s"){ return "Lose"; }
+    if (a === "s" && b === "p"){ return "Win"; }
 }
 
 function GameComponent({ gameID, playerID }) {
@@ -48,7 +48,7 @@ function GameComponent({ gameID, playerID }) {
                 }
                 
                 // Expect response with opponent choice
-                if (resp.status == 200){
+                if (resp.status === 200){
                     setStatus('Waiting');
                     setStatCode(StatusNum.PollingSubmit)
                 }
@@ -67,15 +67,15 @@ function GameComponent({ gameID, playerID }) {
         const axGet = async () => {
             try{
                 const resp = await axios.get(`http://127.0.0.1:8000/gameround/${gameID}/poll/`)
-                if (resp.status == 204){
-                    //Re-request after timeout
+                if (resp.status === 204){
+                    // No response keep polling
                 }
 
-                if (resp.status == 200){
+                if (resp.status === 200){
                     // Placeholder example
-                    setChoices(resp.data)
-                    setStatCode(StatusNum.ResultDisplay)
-                    clearInterval(pollingGet)
+                    setChoices(resp.data);
+                    setStatCode(StatusNum.ResultDisplay);
+                    clearInterval(pollingGet);
                 }
             }
             catch (err){
@@ -113,7 +113,7 @@ function GameComponent({ gameID, playerID }) {
             case StatusNum.GameEnd:
                 return (
                     <>
-                        <p>{wins == 3 ? "You Won the Match" : "You Lost the Match"}</p>
+                        <p>{wins === 3 ? "You Won the Match" : "You Lost the Match"}</p>
                     </>
                 )
             default:
