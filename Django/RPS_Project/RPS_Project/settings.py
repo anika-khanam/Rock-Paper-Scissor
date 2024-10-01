@@ -37,10 +37,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders',
+    'RPS',
+=======
     'RPS',
     'rest_framework',
     'corsheaders'
+>>>>>>> 8fe946c00ae4d4718a536946f46316c9482d8cbe
 ]
+
+# AUTH_USER_MODEL = 'RPS.PlayerAccount'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,8 +66,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+<<<<<<< HEAD
+    'corsheaders.middleware.CorsMiddleware',
+=======
     'corsheaders.middleware.CorsMiddleware'
+>>>>>>> 8fe946c00ae4d4718a536946f46316c9482d8cbe
 ]
+CORS_ALLOW_ALL_ORIGINS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 ROOT_URLCONF = 'RPS_Project.urls'
 

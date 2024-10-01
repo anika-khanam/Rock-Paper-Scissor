@@ -1,4 +1,5 @@
-from django.db import models
+# from django.contrib.auth.models import AbstractUser
+# from django.db import models
 
 class PlayerAccount(models.Model):
     userName = models.CharField(max_length=127,unique=True)

@@ -32,9 +32,8 @@ function GameComponent({ gameID, playerID, completionCallback }) {
     const [statCode, setStatCode] = useState(StatusNum.AwaitingSubmit);
     const [wins, setWins] = useState(0);
 
-    const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/select/`;
-
     const submitSelection = (choice) => {
+        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/select/`;
         setStatCode(StatusNum.Submission)
         setChoices([choice, null]);
 
@@ -47,7 +46,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
                     console.log(resp.data.error);
                 }
                 
-                // Expect response with opponent choice
+                // Expected behaviour is to poll for round selections
                 if (resp.status === 200){
                     setStatus('Waiting');
                     setStatCode(StatusNum.PollingSubmit)
@@ -62,11 +61,12 @@ function GameComponent({ gameID, playerID, completionCallback }) {
     }
 
     const terminateGame = () => {
+        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/finalize`;
         console.log("Ending Game");
 
         const axPost = async () => {
             try{
-                const resp = await axios.post(`http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/finalize`, {"wins": wins, "losses": (round - wins)})
+                const resp = await axios.post(apiURL, {"wins": wins, "losses": (round - wins)})
                 if (resp.status === 200) {
                     console.log("Updated server records");
                     completionCallback();
@@ -83,10 +83,11 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
     useEffect(() => {
         let pollingGet;
+        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/poll/`
 
         const axGet = async () => {
             try{
-                const resp = await axios.get(`http://127.0.0.1:8000/gameround/${gameID}/poll/`)
+                const resp = await axios.get(apiURL)
                 if (resp.status === 204){
                     // No response keep polling
                 }
@@ -109,7 +110,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
         if (statCode === StatusNum.ResultDisplay){
             if (RPSwinner(choices) == "Win") { setWins(wins + 1); }
-            if (round - wins <= 2){
+            if (wins <= 2 && round - wins <= 2){
                 // Another Round
                 setTimeout(() => {
                     setRound(round + 1)
