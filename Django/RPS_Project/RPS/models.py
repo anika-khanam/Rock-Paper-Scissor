@@ -27,5 +27,13 @@ class Room(models.Model):
             return self.publicCode
 
     
+class Game(models.Model):
+    p1ID = models.IntegerField()
+    p2ID = models.IntegerField()
+    p1Choice = models.CharField(max_length=8, blank=True)
+    p2Choice = models.CharField(max_length=8, blank=True)
+
+    def both_guessed(self):
+         return self.p1Choice and self.p2Choice
 
 # Create your models here.

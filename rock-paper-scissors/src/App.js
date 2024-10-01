@@ -5,6 +5,9 @@ import GameComponent from './components/game/Game';
 
 const App = () => {
   return (
+    <GameComponent />
+  )
+  return (
     <div className="App">
 
       <header className="hero">

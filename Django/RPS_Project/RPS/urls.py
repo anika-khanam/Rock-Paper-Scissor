@@ -28,5 +28,5 @@ urlpatterns = [
     path('accounts/<int:pk>/',PlayerAccountDetail.as_view()),
     path('players/',PlayerList.as_view()),
     path('players/<int:pk>/',PlayerDetail.as_view()),
-    path('gameround/', GameRound.as_view()),
+    path('gameround/<int:game_id>/player/<int:player_id>/select/', GameRound.as_view()),
 ]
