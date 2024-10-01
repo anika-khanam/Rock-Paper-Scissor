@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 
 function WaitOnJoin({ roomID, setGameID }) {
     const [statusinfo, setStatusinfo] = useState("");
@@ -6,7 +7,6 @@ function WaitOnJoin({ roomID, setGameID }) {
     useEffect(() => {
         const pollGame = () => {
             const axGet = async () => {
-                let player_id=0;
                 const apiURL = `http://127.0.0.1:8000/manageroom/poll/${roomID}/`;
                 try{
                     const resp = await axios.get(apiURL)
