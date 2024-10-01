@@ -32,6 +32,7 @@ class PlayerDetail(generics.RetrieveDestroyAPIView):
 # Create your views here.
 class GameRound(APIView):
     def post(self, request):
+        # Request contains json for game id, player id, player selection
         print(self.pretty_request(request))
         req_json = json.loads(request.body.decode('utf-8'))
         if req_json["wait"] and random.random() < 0.5:
