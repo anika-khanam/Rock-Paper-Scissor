@@ -6,7 +6,6 @@ function DebugView() {
     return ( 
         <>
             <GameHub />
-            <GameComponent />
         </>
      );
 }

@@ -2,13 +2,12 @@ import React, { useState, useReducer } from 'react';
 import InputSelector from './InputSelector';
 import axios from 'axios'
 
-function GameComponent() {
+function GameComponent({ gameID, playerID }) {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState('');
     const [choices, setChoices] = useState([null, null]);
-    let gameId = 0;
-    let playerId = 0;
-    const apiURL = `http://127.0.0.1:8000/gameround/${gameId}/player/${playerId}/select/`;
+
+    const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/select/`;
 
     const submitSelection = (choice) => {
         setChoices([choice, null]);
