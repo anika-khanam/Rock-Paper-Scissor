@@ -31,6 +31,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
     const [round, setRound] = useState(1);
     const [statCode, setStatCode] = useState(StatusNum.AwaitingSubmit);
     const [wins, setWins] = useState(0);
+    const [losses, setLosses] = useState(0);
 
     const submitSelection = (choice) => {
         const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/select/`;
@@ -67,7 +68,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
         const axPost = async () => {
             try{
-                const resp = await axios.post(apiURL, {"wins": wins, "losses": (round - wins)})
+                const resp = await axios.post(apiURL, {"wins": wins, "losses": losses, "draws": 5 - wins - losses})
                 if (resp.status === 200) {
                     console.log("Updated server records");
                     completionCallback();
@@ -111,7 +112,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
         if (statCode === StatusNum.ResultDisplay){
             if (RPSwinner(choices) == "Win") { setWins(wins + 1); }
-            if (wins <= 2 && round - wins <= 2){
+            if (wins <= 2 && losses <= 2 && round <= 4){
                 // Another Round
                 setTimeout(() => {
                     setRound(round + 1)
@@ -152,7 +153,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
             case StatusNum.GameEnd:
                 return (
                     <>
-                        <p>{wins === 3 ? "You Won the Match" : "You Lost the Match"}</p>
+                        <p>{wins > losses ? "You Won the Match" : wins < losses ? "You Lost the Match" : "You drew the match"}</p>
                         <button onClick={terminateGame}>Return to Menu</button>
                     </>
                 )
@@ -165,6 +166,8 @@ function GameComponent({ gameID, playerID, completionCallback }) {
         <>
             <p>Round {round} (Best of 5)</p>
             <p>Wins: {wins}</p>
+            <p>Losses: {losses}</p>
+            <p>Draws: {5 - wins - losses}</p>
             {renderBody()}
         </>
         

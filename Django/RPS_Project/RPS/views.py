@@ -159,3 +159,22 @@ class GameRoundResult(APIView):
             'requester_choice': req_choice,
             'other_choice': oth_choice,
         }, status=200)
+
+class GameFinalize(APIView):
+    def post(self, request, game_id, player_id):
+        try:
+            game = Game.objects.get(id=game_id)
+        except Game.DoesNotExist:
+            return Response({'error': 'Game not found'}, status=404)
+        
+        try:
+            player = Player.objects.get(id=player_id)
+        except Player.DoesNotExist:
+            return Response({'error': 'Player not found'}, status=404)
+        
+        # Currently not doing anything with these stats but can be recorded somewhere
+        player_wins = request.POST.get('wins')
+        player_losses = request.POST.get('losses')
+        player_draws = request.POST.get('draws')
+
+        return Response({"message": "Game stats recorded"}, status=200)
