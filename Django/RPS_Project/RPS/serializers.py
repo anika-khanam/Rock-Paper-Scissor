@@ -25,7 +25,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
 
+    
 class PlayerAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlayerAccount

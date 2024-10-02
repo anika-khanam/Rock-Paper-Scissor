@@ -10,6 +10,7 @@ import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage/ForgotPasswordPage'; 
 import { ToastContainer } from 'react-toastify';
+import WelcomePage from './components/WelcomePage/WelcomePage';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/leaderboard" element={<LeaderBoards/>}/>
         <Route path="/player/:playerId" element={<PlayerPage/>}/>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/welcome" element={<WelcomePage />} />
       </Routes>
     </Router>
   );

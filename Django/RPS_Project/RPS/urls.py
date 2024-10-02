@@ -29,5 +29,6 @@ urlpatterns = [
     path('manageroom/join/<int:room_code>/player/<int:player_id>/', JoinRoom.as_view()),
     path('manageroom/poll/<int:room_code>/',QueryGame.as_view()),
     path('leaderboard/',PlayerLeaderboard.as_view()),
-    
+    path('forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
 ]
+    

@@ -15,6 +15,10 @@ import json
 from rest_framework import generics
 from django.contrib.auth.models import User
 from .serializers import PlayerSerializer 
+from rest_framework.permissions import AllowAny 
+from django.core.mail import send_mail 
+from .serializers import ForgotPasswordSerializer
+
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -52,6 +56,7 @@ class LoginView(APIView):
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'username': user.username
             })
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -65,6 +70,26 @@ class CheckUserView(APIView):
 def guest_view(request):
     return Response({"message": "You are a guest user"}, status=status.HTTP_200_OK)
 
+
+class ForgotPasswordView(generics.GenericAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = ForgotPasswordSerializer  
+
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')
+        try:
+            user = User.objects.get(email=email)
+            reset_link = f"http://127.0.0.1:3000/reset-password/{user.id}" 
+            send_mail(
+                'Password Reset Request',
+                f'You requested a password reset. Click the link to reset: {reset_link}',
+                'anika.khanam@mthree.com',
+                [user.email],
+                fail_silently=False,
+            )
+            return Response({'message': 'Password reset link sent to your email.'}, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'Email not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class PlayerAccountList(generics.ListCreateAPIView):
     serializer_class = PlayerAccountSerializer

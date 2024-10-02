@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LoginPage.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,6 +8,7 @@ import rockPaperScissorsImg from '../../assets/rock-paper-scissors.png';
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,11 +19,13 @@ const LoginPage = () => {
     e.preventDefault();
     axios.post('http://127.0.0.1:8000/login/', credentials)
       .then(response => {
-        console.log(response.data);
+        const { access, username } = response.data;
+        localStorage.setItem('accessToken', access); 
+        localStorage.setItem('username', username); 
         toast.success('You are logged in successfully!');
+        navigate('/welcome'); 
       })
       .catch(error => {
-        console.error('There was an error logging in!', error.response.data);
         toast.error('Login failed! Please check your username and password.');
       });
     };
