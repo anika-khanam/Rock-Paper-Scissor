@@ -12,3 +12,12 @@
 .GameHubButton{
     margin: 0;
 }
+
+.active {
+    background-color: #21a1f1;
+}
+
+button:disabled, button:hover:disabled{
+    cursor: not-allowed;
+    background-color: #61dafb;
+}
