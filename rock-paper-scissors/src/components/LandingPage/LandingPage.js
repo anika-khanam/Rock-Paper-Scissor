@@ -15,6 +15,9 @@ const LandingPage = () => {
               <button>Login</button>
             </Link>
             <button onClick={() => alert('Playing as a guest!')}>Play as Guest</button>
+            <Link to="/leaderboard">
+            <button>Leaderboards</button>
+            </Link>
           </div>
         </div>
       </header>
