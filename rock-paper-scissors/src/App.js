@@ -5,14 +5,11 @@ import LeaderBoards from './components/LeaderBoardPage/LeaderBoard';
 import DebugView from './components/DebugPage/DebugView';
 import './App.css';
 import PlayerPage from './components/PlayerPage/PlayerPage';
-<<<<<<< HEAD
 import GameHub from './components/game/GameHub';
-=======
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage/ForgotPasswordPage'; 
 import { ToastContainer } from 'react-toastify';
->>>>>>> refs/remotes/origin/main
 
 const App = () => {
   return (
