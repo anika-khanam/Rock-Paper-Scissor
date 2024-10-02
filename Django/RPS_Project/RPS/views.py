@@ -11,13 +11,10 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
-<<<<<<< Updated upstream
 import json
-=======
 from rest_framework import generics
 from django.contrib.auth.models import User
 from .serializers import PlayerSerializer 
->>>>>>> Stashed changes
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()

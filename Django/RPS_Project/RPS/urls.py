@@ -1,9 +1,6 @@
-<<<<<<< Updated upstream
-=======
 from django.urls import path
 from .views import RegisterView, CheckUserView, guest_view
 from rest_framework_simplejwt.views import TokenObtainPairView
->>>>>>> Stashed changes
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -26,14 +23,11 @@ urlpatterns = [
     path('gameround/<int:game_id>/player/<int:player_id>/result/', GameRoundResult.as_view()),
     path('gameround/<int:game_id>/player/<int:player_id>/finalize/', GameFinalize.as_view()),
     path('manageroom/create/<int:player_id>/', CreateRoom.as_view()),
-<<<<<<< Updated upstream
     path('manageroom/join/<int:room_id>/player/<int:player_id>/', JoinRoom.as_view()),
     path('manageroom/poll/<int:room_id>/',QueryGame.as_view()),
-    path('leaderboard/',PlayerLeaderboard.as_view())
-=======
+    path('leaderboard/',PlayerLeaderboard.as_view()),
     path('manageroom/join/<int:room_code>/player/<int:player_id>/', JoinRoom.as_view()),
     path('manageroom/poll/<int:room_code>/',QueryGame.as_view()),
     path('leaderboard/',PlayerLeaderboard.as_view()),
     
->>>>>>> Stashed changes
 ]
