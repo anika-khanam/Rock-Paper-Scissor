@@ -1,3 +1,8 @@
+from django.urls import path
+from .views import RegisterView, CheckUserView, guest_view
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+urlpatterns = [
 """
 URL configuration for RPS_Project project.
 

@@ -4,5 +4,5 @@ Currently very much WIP
 
 ## Authors
 Anika Khanam  
-Ioannis Magalhaes  
+Ionnis Magal  
 Thoms Moyse  
