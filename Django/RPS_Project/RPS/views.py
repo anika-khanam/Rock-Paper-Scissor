@@ -97,7 +97,7 @@ class QueryGame(APIView):
             return Response({"error": 'Game not started'}, status=204)
         return Response({"message": "Game found", "game_id":room.gameID}, status=200)
 
-class GameRound(APIView):
+class GameRoundSelect(APIView):
     def post(self, request, game_id, player_id):
         choice = request.POST.get('choice')
 
@@ -107,46 +107,51 @@ class GameRound(APIView):
             return Response({'error': 'Game not found'}, status=404)
 
         # Update the game state based on which player is submitting
-        if game.player_one == player_id:
-            game.player_one_choice = choice
-        elif game.player_two == player_id:
-            game.player_two_choice = choice
+        if game.p1ID == player_id:
+            game.p1Choice = choice
+        elif game.p2ID == player_id:
+            game.p2Choice = choice
         else:
             return Response({'error': 'Invalid player ID'}, status=403)
 
         # Save the game state
         game.save()
 
-        # Check if both players have made their choices
-        if game.is_full():
-            # Both players have made their selections
-            return Response({
-                'player_one_choice': game.player_one_choice,
-                'player_two_choice': game.player_two_choice,
-            }, status=200)
-
         # One player has submitted their choice; wait for the other
-        return Response({'message': 'Waiting for the other player'}, status=202)
-    
+        return Response({'message': 'Please poll for results'}, status=202)
 
-    def pretty_request(self, request):
-        headers = ''
-        for header, value in request.META.items():
-            if not header.startswith('HTTP'):
-                continue
-            header = '-'.join([h.capitalize() for h in header[5:].lower().split('_')])
-            headers += '{}: {}\n'.format(header, value)
+class GameRoundResult(APIView):
+    def get(self, request, game_id, player_id):
+        try:
+            game = Game.objects.get(id=game_id)
+        except Game.DoesNotExist:
+            return Response({'error': 'Game not found'}, status=404)
+        
+        if not game.both_guessed():
+            return Response({'message': 'Waiting on player selections'}, status=202)
+        
+        if game.p1ID == player_id:
+            game.p1Seen = True
+            req_choice = game.p1Choice
+            oth_choice = game.p2Choice
+        elif game.p2ID == player_id:
+            game.p2Seen = True
+            req_choice = game.p2Choice
+            oth_choice = game.p1Choice
+        else:
+            return Response({'error': 'Invalid player ID'}, status=403)
+        
+        # Reset round variables
+        if game.both_seen():
+            game.p1Choice = ""
+            game.p2Choice = ""
+            game.p1Seen = False
+            game.p2Seen = False
 
-        return (
-            '{method} HTTP/1.1\n'
-            'Content-Length: {content_length}\n'
-            'Content-Type: {content_type}\n'
-            '{headers}\n\n'
-            '{body}'
-        ).format(
-            method=request.method,
-            content_length=request.META['CONTENT_LENGTH'],
-            content_type=request.META['CONTENT_TYPE'],
-            headers=headers,
-            body=request.body,
-        )
+        game.save()
+
+        return Response({
+            'message': 'Player choices found',
+            'requester_choice': req_choice,
+            'other_choice': oth_choice,
+        }, status=200)
