@@ -172,9 +172,20 @@ class GameFinalize(APIView):
         except Player.DoesNotExist:
             return Response({'error': 'Player not found'}, status=404)
         
+        if player_id == game.p1ID:
+            game.p1Finalize = True
+        elif player_id == game.p2ID:
+            game.p2Finalize = True
+        else:
+            return Response({'error': 'Player not found in game'}, status=404)
+
         # Currently not doing anything with these stats but can be recorded somewhere
         player_wins = request.POST.get('wins')
         player_losses = request.POST.get('losses')
         player_draws = request.POST.get('draws')
+
+        if game.both_finalize():
+            # Do some cleanup here like removing game and room?
+            pass
 
         return Response({"message": "Game stats recorded"}, status=200)

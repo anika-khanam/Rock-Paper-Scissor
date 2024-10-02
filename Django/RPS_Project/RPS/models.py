@@ -24,11 +24,16 @@ class Game(models.Model):
       p2Choice = models.CharField(max_length=8, blank=True)
       p1Seen = models.BooleanField(default=False)
       p2Seen = models.BooleanField(default=False)
+      p1Finalize = models.BooleanField(default=False)
+      p2Finalize = models.BooleanField(default=False)
 
       def both_guessed(self):
             return self.p1Choice and self.p2Choice
 
       def both_seen(self):
+            return self.p1Seen and self.p2Seen
+      
+      def both_finalize(self):
             return self.p1Seen and self.p2Seen
       
 
