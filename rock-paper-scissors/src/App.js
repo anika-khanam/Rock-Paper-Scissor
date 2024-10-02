@@ -4,6 +4,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage/ForgotPasswordPage';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
+import DebugView from './components/DebugPage/DebugView';
 import './App.css';
 
 const App = () => {
