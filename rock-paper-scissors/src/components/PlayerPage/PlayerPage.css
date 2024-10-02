@@ -1,0 +1,12 @@
+.hero {
+    background: linear-gradient(to right, #ff7e5f, #fedf7b);
+    padding: 100px 0;
+    align-items: center;
+  }
+
+.stats{
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    padding: 20px;
+}

@@ -7,6 +7,7 @@ import LeaderBoards from './components/LeaderBoardPage/LeaderBoard';
 import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import DebugView from './components/DebugPage/DebugView';
 import './App.css';
+import PlayerPage from './components/PlayerPage/PlayerPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/debug" element={<DebugView />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/leaderboard" element={<LeaderBoards/>}/>
+        <Route path="/player/:playerId" element={<PlayerPage/>}/>
       </Routes>
     </Router>
   );
