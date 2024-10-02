@@ -11,6 +11,7 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
+import json
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -77,9 +78,9 @@ class CreateRoom(APIView):
         return Response({"message": "Room created successfully", "room_id":room.roomCode}, status=201)
 
 class JoinRoom(APIView):
-    def post(self, request, room_code, player_id):
+    def post(self, request, room_id, player_id):
         try:
-            room = GameRoom.objects.get(roomCode=room_code)
+            room = GameRoom.objects.get(roomCode=room_id)
         except GameRoom.DoesNotExist:
             return Response({'error': 'Room not found'}, status=404)
         
@@ -93,7 +94,7 @@ class JoinRoom(APIView):
         # Create game now room is full
         game = Game.objects.create(p1 = room.p1, p2 = player)
 
-        room.gameID = game
+        room.game = game
         room.save()
 
         return Response({"message": "Room joined successfully", "game_id":game.id}, status=201)
@@ -104,14 +105,15 @@ class QueryGame(APIView):
             room = GameRoom.objects.get(roomCode=room_id)
         except GameRoom.DoesNotExist:
             return Response({'error': 'Room not found'}, status=404)
-        if room.gameID is None:
+        if room.game is None:
             return Response({"error": 'Game not started'}, status=204)
-        return Response({"message": "Game found", "game_id":room.gameID}, status=200)
+        return Response({"message": "Game found", "game_id":room.game_id}, status=200)
 
 class GameRoundSelect(APIView):
     def post(self, request, game_id, player_id):
-        choice = request.POST.get('choice')
-
+        choice = json.loads(request.body.decode('utf-8')).get("choice")
+        print("Choice: ", choice)
+        
         try:
             game = Game.objects.get(id=game_id)
         except Game.DoesNotExist:
@@ -196,9 +198,10 @@ class GameFinalize(APIView):
             return Response({'error': 'Player not found in game'}, status=404)
 
         # Currently not doing anything with these stats but can be recorded somewhere
-        player_wins = request.POST.get('wins')
-        player_losses = request.POST.get('losses')
-        player_draws = request.POST.get('draws')
+        req_json = json.loads(request.body.decode('utf-8'))
+        player_wins = req_json.get('wins')
+        player_losses = req_json.get('losses')
+        player_draws = req_json.get('draws')
 
         if game.both_finalize():
             # Do some cleanup here like removing game and room?

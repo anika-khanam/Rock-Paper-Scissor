@@ -41,7 +41,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
         console.log(choice, typeof(choice))
         const axPost = async () => {
             try{
-                const resp = await axios.post(apiURL, choice)
+                const resp = await axios.post(apiURL, {"choice":choice})
                 console.log(resp);
                 if (resp.status == 204){
                     console.log(resp.data.message);
@@ -63,7 +63,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
     }
 
     const terminateGame = () => {
-        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/finalize`;
+        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/finalize/`;
         console.log("Ending Game");
 
         const axPost = async () => {
@@ -112,6 +112,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
         if (statCode === StatusNum.ResultDisplay){
             if (RPSwinner(choices) == "Win") { setWins(wins + 1); }
+            else if (RPSwinner(choices) == "Lose") { setLosses(losses + 1); }
             if (wins <= 2 && losses <= 2 && round <= 4){
                 // Another Round
                 setTimeout(() => {
@@ -137,7 +138,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
                     <>
                         <InputSelector submitCallback={submitSelection}/>
                         <ul>
-                            <li>{ choices }</li>
+                            <li>You Chose: {choices[0]}, Your opponent chose: {choices[1]}</li>
                             <li>{ status }</li>
                         </ul>
                     </>
@@ -167,7 +168,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
             <p>Round {round} (Best of 5)</p>
             <p>Wins: {wins}</p>
             <p>Losses: {losses}</p>
-            <p>Draws: {5 - wins - losses}</p>
+            <p>Draws: {(round - 1) - wins - losses}</p>
             {renderBody()}
         </>
         
