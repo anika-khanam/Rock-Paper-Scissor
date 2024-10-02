@@ -143,6 +143,12 @@ function GameComponent({ gameID, playerID, completionCallback }) {
                         </ul>
                     </>
                 );
+            case StatusNum.PollingSubmit:
+                return (
+                    <>
+                        <p>Waiting for opponent...</p>
+                    </>
+                )
             case StatusNum.ResultDisplay:
                 return (
                     <>
@@ -168,7 +174,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
             <p>Round {round} (Best of 5)</p>
             <p>Wins: {wins}</p>
             <p>Losses: {losses}</p>
-            <p>Draws: {(round - 1) - wins - losses}</p>
+            {statCode != StatusNum.ResultDisplay ? <p>Draws: {(round - 1) - wins - losses}</p> : <p>Draws: {round - wins - losses}</p> }
             {renderBody()}
         </>
         
