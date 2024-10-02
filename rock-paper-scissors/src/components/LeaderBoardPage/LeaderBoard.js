@@ -1,5 +1,6 @@
 import React, { useEffect,useState} from "react";
 import axios from 'axios';
+import './LeaderBoardPage.css'
 
 
 function LeaderBoards(){
@@ -17,7 +18,9 @@ function LeaderBoards(){
 
     return(
         <>
-            <h3>LeaderBoards</h3>
+            <div className="hero">
+                <h1>Leaderboard</h1>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -28,7 +31,14 @@ function LeaderBoards(){
                 </thead>
                 <tbody>
                     {leaderBoard.map((player) =>(
-                        <tr key = {player.id}>
+                        player.rank%2==0?(
+                        <tr style={{background: "white"}} key = {player.id}>
+                            <td>{player.rank}</td>
+                            <td>{player.playerName}</td>
+                            <td>{player.wins}</td>
+                        </tr>
+                        ) :
+                        <tr style={{background: "#fedf7b"}} key = {player.id}>
                             <td>{player.rank}</td>
                             <td>{player.playerName}</td>
                             <td>{player.wins}</td>

@@ -1,7 +1,7 @@
 import React from 'react';
-import GameHub from './GameHub';
+import GameHub from './game/GameHub';
 import GameComponent from './game/Game';
-import LeaderBoards from './LeaderBoard';
+import LeaderBoards from './LeaderBoardPage/LeaderBoard';
 
 function DebugView() {
     return ( 

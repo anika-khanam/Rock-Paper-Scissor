@@ -7,7 +7,7 @@ import ForgotPasswordPage from './components/ForgotPasswordPage/ForgotPasswordPa
 import './styles.css';
 import rockPaperScissorsImg from './rock-paper-scissors.png';
 import DebugView from './components/DebugView';
-import LeaderBoards from './components/LeaderBoard';
+import LeaderBoards from './components/LeaderBoardPage/LeaderBoard';
 
 const App = () => {
   return (
@@ -17,6 +17,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/leaderboard" element={<LeaderBoards/>}/>
       </Routes>
     </Router>
   );
