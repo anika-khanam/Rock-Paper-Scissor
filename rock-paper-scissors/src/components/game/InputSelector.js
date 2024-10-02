@@ -14,7 +14,7 @@ function InputSelector({ submitCallback }) {
             <button className={selected == 0 ? 'active' : 'inactive'} onClick={() => setSelected(0)}>Rock</button>
             <button className={selected == 1 ? 'active' : 'inactive'} onClick={() => setSelected(1)}>Paper</button>
             <button className={selected == 2 ? 'active' : 'inactive'} onClick={() => setSelected(2)}>Scissors</button>
-            <button onClick={submitHandler}>Submit Choice</button>
+            <button onClick={submitHandler} disabled={selected === null}>Submit Choice</button>
         </>
     );
 }
