@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from .models import PlayerAccount,Player
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -16,3 +17,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+class PlayerAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlayerAccount
+        fields = '__all__'
+
+class PlayerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Player
+        fields = '__all__'
+
+class LeaderboardSerializer(serializers.ModelSerializer):
+    rank = serializers.IntegerField()
+    
+    class Meta:
+        model = Player
+        fields = '__all__'
