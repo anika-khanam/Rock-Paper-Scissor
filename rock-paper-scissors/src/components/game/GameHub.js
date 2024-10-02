@@ -25,7 +25,7 @@ function GameHub() {
             }
             catch(err){
                 console.error(err);
-                setStatusinfo("Failed");
+                setStatusinfo(err.response.data.error);
             }
         }
         axPost();
@@ -45,7 +45,7 @@ function GameHub() {
             }
             catch(err){
                 console.error(err);
-                setStatusinfo("Failed");
+                setStatusinfo(err.response.data.error);
             }
         }
         axPost();

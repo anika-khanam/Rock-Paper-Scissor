@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import InputSelector from './InputSelector';
 import axios from 'axios'
+import AnimatedEllipses from '../utils/AnimatedEllipses';
 
 class StatusNum {
     static AwaitingSubmit = 0;
@@ -146,7 +147,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
             case StatusNum.PollingSubmit:
                 return (
                     <>
-                        <p>Waiting for opponent...</p>
+                        <span>Waiting for opponent</span><AnimatedEllipses speed={500}/>
                     </>
                 )
             case StatusNum.ResultDisplay:
