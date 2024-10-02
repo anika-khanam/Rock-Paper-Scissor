@@ -29,7 +29,7 @@ const LoginPage = () => {
 
   return (
     <div className="LoginPage">
-      <ToastContainer />  {/* Add this line */}
+      <ToastContainer /> 
       <header className="header">
         <h1>Login to Your Account</h1>
       </header>
