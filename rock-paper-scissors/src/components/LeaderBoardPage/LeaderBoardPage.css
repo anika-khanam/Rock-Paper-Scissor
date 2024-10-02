@@ -1,0 +1,25 @@
+.hero {
+    background: linear-gradient(to right, #ff7e5f, #fedf7b);
+    padding: 100px 0;
+  }
+
+
+table{
+    margin-top: 2%;
+    padding: 5px;
+    width: 25%;
+  }
+  
+tr,th{
+    color: #ff7e5f;
+}
+
+tr{
+    padding: 2px;
+    margin: 8px;
+}
+td{
+    color: darkgrey;
+    border-left: solid 2px;
+     
+}
