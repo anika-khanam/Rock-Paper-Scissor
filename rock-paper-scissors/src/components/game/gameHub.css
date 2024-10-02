@@ -1,0 +1,14 @@
+#hubSelect{
+    width: 50vw;
+    height: 50vh;
+    margin: auto;
+    text-align: center;
+}
+
+
+.inputLabel{
+    margin: 20px 0 20px !important;
+}
+.GameHubButton{
+    margin: 0;
+}

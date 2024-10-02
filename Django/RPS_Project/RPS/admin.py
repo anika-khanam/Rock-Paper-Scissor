@@ -5,4 +5,3 @@ admin.site.register(PlayerAccount)
 admin.site.register(Player)
 admin.site.register(Game)
 admin.site.register(GameRoom)
-# Register your models here.

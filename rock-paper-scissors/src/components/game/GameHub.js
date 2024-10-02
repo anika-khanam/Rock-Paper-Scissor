@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import GameComponent from './Game';
 import WaitOnJoin from './WaitOnJoin';
+import './gameHub.css'
 
 function GameHub() {
     const [statusinfo, setStatusinfo] = useState("");
@@ -58,17 +59,25 @@ function GameHub() {
     return ( 
         <>
         
-            {gameID != null ? <GameComponent gameID={gameID} playerID={player_id} completionCallback={finishGame}/> : roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : <>
-            <button onClick={ createGame }>Create Room</button>
-            <label htmlFor='roomIDInput'>Room ID</label>
-            <input id='roomIDInput' onChange={(e) => setJoinId(e.target.value)}></input>
-            <label htmlFor='playerIDInput'>Player ID</label>
-            <input id='playerIDInput' onChange={(e) => setPlayer_id(e.target.value)}></input>
-            <button onClick={ joinGame }>Join Room</button>
-            <span>Status: { statusinfo }</span><br />
-            <span>Room Code: { roomID }</span><br />
-            <span>Game ID: { gameID }</span>
-        </>}
+            {gameID != null ? <GameComponent gameID={gameID} playerID={player_id} completionCallback={finishGame}/> : 
+             roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : 
+            <div id='hubSelect'>
+                <div className="inputLabel">
+                    <label htmlFor='playerIDInput'>Player ID: </label>
+                    <input id='playerIDInput' onChange={(e) => setPlayer_id(e.target.value)}></input>
+                </div>
+                <button className='GameHubButton' onClick={ createGame }>Create Room</button>
+                <div className="inputLabel">
+                    <label htmlFor='roomIDInput'>Room ID: </label>
+                    <input id='roomIDInput' onChange={(e) => setJoinId(e.target.value)}></input>
+                </div>
+                <button className='GameHubButton' onClick={ joinGame }>Join Room</button>
+                <div id="debugInfo">
+                    <span>Status: { statusinfo }</span><br />
+                    <span>Room Code: { roomID }</span><br />
+                    <span>Game ID: { gameID }</span>
+                </div>
+            </div>}
         </> 
     );
 }

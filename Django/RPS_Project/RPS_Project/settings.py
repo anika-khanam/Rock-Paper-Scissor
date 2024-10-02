@@ -45,13 +45,6 @@ INSTALLED_APPS = [
 
 # AUTH_USER_MODEL = 'RPS.PlayerAccount'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
-
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,6 +61,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
 }
 
 ROOT_URLCONF = 'RPS_Project.urls'
@@ -89,14 +85,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'RPS_Project.wsgi.application'
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
-}
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Database

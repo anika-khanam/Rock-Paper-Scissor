@@ -35,7 +35,7 @@ function WaitOnJoin({ roomID, setGameID }) {
     
 
     return ( 
-        <div>
+        <div className='pageDiv'>
             <p>Waiting for player to join...</p>
             <p>Room ID: {roomID}</p>
             <p>Status: {statusinfo}</p>
