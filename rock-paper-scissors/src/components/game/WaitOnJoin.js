@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import AnimatedEllipses from '../utils/AnimatedEllipses';
 
 function WaitOnJoin({ roomID, setGameID }) {
     const [statusinfo, setStatusinfo] = useState("");
@@ -19,6 +20,7 @@ function WaitOnJoin({ roomID, setGameID }) {
                     }
                     else if (resp.status === 204){
                         console.log("Waiting on game id");
+                        setStatusinfo("Waiting")
                     }
                 }
                 catch(err){
@@ -36,7 +38,7 @@ function WaitOnJoin({ roomID, setGameID }) {
 
     return ( 
         <div className='pageDiv'>
-            <p>Waiting for player to join...</p>
+            <span>Waiting for player to join</span><AnimatedEllipses speed={500}/>
             <p>Room ID: {roomID}</p>
             <p>Status: {statusinfo}</p>
         </div>

@@ -8,6 +8,7 @@ import RegistrationPage from './components/RegistrationPage/RegistrationPage';
 import DebugView from './components/DebugPage/DebugView';
 import './App.css';
 import PlayerPage from './components/PlayerPage/PlayerPage';
+import GameHub from './components/game/GameHub';
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/debug" element={<DebugView />} />
+        <Route path="/gamehub" element={<GameHub />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/leaderboard" element={<LeaderBoards/>}/>
         <Route path="/player/:playerId" element={<PlayerPage/>}/>
