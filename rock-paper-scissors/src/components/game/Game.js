@@ -42,12 +42,13 @@ function GameComponent({ gameID, playerID, completionCallback }) {
             try{
                 const resp = await axios.post(apiURL, choice)
                 console.log(resp);
-                if (resp.status > 202){
-                    console.log(resp.data.error);
+                if (resp.status == 204){
+                    console.log(resp.data.message);
+                    setStatus('Try Again');
                 }
                 
                 // Expected behaviour is to poll for round selections
-                if (resp.status === 200){
+                if (resp.status === 202){
                     setStatus('Waiting');
                     setStatCode(StatusNum.PollingSubmit)
                 }
@@ -83,7 +84,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
     useEffect(() => {
         let pollingGet;
-        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/poll/`
+        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/result/`
 
         const axGet = async () => {
             try{
@@ -94,7 +95,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
                 if (resp.status === 200){
                     // Placeholder example
-                    setChoices(resp.data);
+                    setChoices([resp.data.requester_choice, resp.data.other_choice]);
                     setStatCode(StatusNum.ResultDisplay);
                     clearInterval(pollingGet);
                 }

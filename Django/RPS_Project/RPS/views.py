@@ -105,6 +105,10 @@ class GameRoundSelect(APIView):
             game = Game.objects.get(id=game_id)
         except Game.DoesNotExist:
             return Response({'error': 'Game not found'}, status=404)
+        
+        # Check round has appropriately been reset
+        if (game.p1ID == player_id and game.p1Choice) or (game.p2ID == player_id and game.p2Choice):
+            return Response({'message': 'Waiting on opponent before select'}, status=204)
 
         # Update the game state based on which player is submitting
         if game.p1ID == player_id:
@@ -128,7 +132,7 @@ class GameRoundResult(APIView):
             return Response({'error': 'Game not found'}, status=404)
         
         if not game.both_guessed():
-            return Response({'message': 'Waiting on player selections'}, status=202)
+            return Response({'message': 'Waiting on player selections'}, status=204)
         
         if game.p1ID == player_id:
             game.p1Seen = True

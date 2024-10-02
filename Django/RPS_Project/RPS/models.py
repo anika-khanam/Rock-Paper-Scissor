@@ -30,6 +30,7 @@ class Game(models.Model):
 
       def both_seen(self):
             return self.p1Seen and self.p2Seen
+      
 
 class GameRoom(models.Model):
       roomCode = models.AutoField(primary_key=True)
