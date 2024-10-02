@@ -11,7 +11,7 @@ const LandingPage = () => {
           <h1>Challenge the World in Rock, Paper, Scissors!</h1>
           <p>Play against your friends, track your stats, and become the ultimate champion!</p>
           <div className="cta-buttons">
-            <Link to="/login"> {/* Link to the Login Page */}
+            <Link to="/login"> 
               <button>Login</button>
             </Link>
             <button onClick={() => alert('Playing as a guest!')}>Play as Guest</button>

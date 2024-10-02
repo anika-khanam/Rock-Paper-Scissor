@@ -47,7 +47,11 @@ class GameRoom(models.Model):
       game = models.ForeignKey(Game,on_delete=models.SET_NULL,null=True)
 
       def __str__(self) :
+<<<<<<< Updated upstream
             return f"Code: {self.roomCode}, P1: {self.p1}, P2:{self.p2}"
+=======
+            return str(self.roomCode)
+>>>>>>> Stashed changes
 
       def room_full(self):
         return self.p1ID is not None and self.p1ID is not None

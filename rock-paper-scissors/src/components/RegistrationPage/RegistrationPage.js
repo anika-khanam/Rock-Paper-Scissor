@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './RegistrationPage.css';
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 import registrationImage from '../../assets/rock-paper-scissors.png';
 
 const RegistrationPage = () => {
@@ -17,13 +20,32 @@ const RegistrationPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match!');
+      return;
+    }
+
+    axios.post('http://127.0.0.1:8000/register/', {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword
+    })
+    .then(response => {
+      console.log(response.data);
+      toast.success('Your player account is registered!'); 
+    })
+    .catch(error => {
+      console.error('There was an error registering!', error.response.data);
+      toast.error('Registration failed! Please try again.');
+    });
   };
 
   return (
     <div className="RegistrationPage">
+      <ToastContainer />  
       <img src={registrationImage} alt="Registration" className="registration-image" />
-
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <table>
