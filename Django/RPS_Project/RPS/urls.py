@@ -35,5 +35,6 @@ urlpatterns = [
     path('gameround/<int:game_id>/player/<int:player_id>/select/', GameRound.as_view()),
     path('manageroom/create/<int:player_id>/', CreateRoom.as_view()),
     path('manageroom/join/<int:room_code>/player/<int:player_id>/', JoinRoom.as_view()),
-    path('leaderboard/',PlayerLeaderboard.as_view(),)
+    path('manageroom/poll/<int:room_code>/',QueryGame.as_view()),
+    path('leaderboard/',PlayerLeaderboard.as_view())
 ]

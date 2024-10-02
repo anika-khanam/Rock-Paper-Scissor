@@ -87,6 +87,16 @@ class JoinRoom(APIView):
 
         return Response({"message": "Room joined successfully", "game_id":game.id}, status=201)
 
+class QueryGame(APIView):
+    def get(self, request, room_id):
+        try:
+            room = GameRoom.objects.get(roomCode=room_id)
+        except GameRoom.DoesNotExist:
+            return Response({'error': 'Room not found'}, status=404)
+        if room.gameID is None:
+            return Response({"error": 'Game not started'}, status=204)
+        return Response({"message": "Game found", "game_id":room.gameID}, status=200)
+
 class GameRound(APIView):
     def post(self, request, game_id, player_id):
         choice = request.POST.get('choice')

@@ -12,11 +12,14 @@ function WaitOnJoin({ roomID, setGameID }) {
                     const resp = await axios.get(apiURL)
                     console.log(resp);
     
-                    if (resp.status == 201){
+                    if (resp.status === 200){
                         setStatusinfo('Room Joined');
                         clearInterval(pollInterval)
+                        setGameID(resp.data.game_id)
                     }
-                    setGameID(resp.data.game_id)
+                    else if (resp.status === 204){
+                        console.log("Waiting on game id");
+                    }
                 }
                 catch(err){
                     console.error(err);

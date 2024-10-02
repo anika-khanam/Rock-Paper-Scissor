@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-import GameComponent from './game/Game';
+import GameComponent from './Game';
 import WaitOnJoin from './WaitOnJoin';
 
 function GameHub() {
