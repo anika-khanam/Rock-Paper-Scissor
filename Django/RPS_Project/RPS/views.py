@@ -66,7 +66,13 @@ class PlayerLeaderboard(generics.ListAPIView):
 # Create your views here.
 class CreateRoom(APIView):
     def post(self, request, player_id):
-        room = GameRoom.objects.create(p1ID=player_id)
+        try:
+            player = Player.objects.get(pk=player_id)
+        except Player.DoesNotExist:
+            return Response({'error': 'Player not found'}, status=404)
+        
+        room = GameRoom.objects.create(p1=player)
+
 
         return Response({"message": "Room created successfully", "room_id":room.roomCode}, status=201)
 
@@ -77,10 +83,15 @@ class JoinRoom(APIView):
         except GameRoom.DoesNotExist:
             return Response({'error': 'Room not found'}, status=404)
         
-        room.p2ID = player_id
+        try:
+            player = Player.objects.get(pk=player_id)
+        except Player.DoesNotExist:
+            return Response({'error': 'Player not found'}, status=404)
+        
+        room.p2 = player
 
         # Create game now room is full
-        game = Game.objects.create(p1ID = room.p1ID, p2ID = player_id)
+        game = Game.objects.create(p1 = room.p1, p2 = player)
 
         room.gameID = game
         room.save()
@@ -105,15 +116,20 @@ class GameRoundSelect(APIView):
             game = Game.objects.get(id=game_id)
         except Game.DoesNotExist:
             return Response({'error': 'Game not found'}, status=404)
-        
+        try:
+            player = Player.objects.get(pk=player_id)
+        except Player.DoesNotExist:
+            return Response({'error': 'Game not found'}, status=404)
+
+
         # Check round has appropriately been reset
-        if (game.p1ID == player_id and game.p1Choice) or (game.p2ID == player_id and game.p2Choice):
+        if (game.p1 == player and game.p1Choice) or (game.p2 == player and game.p2Choice):
             return Response({'message': 'Waiting on opponent before select'}, status=204)
 
         # Update the game state based on which player is submitting
-        if game.p1ID == player_id:
+        if game.p1_id == player_id:
             game.p1Choice = choice
-        elif game.p2ID == player_id:
+        elif game.p2_id == player_id:
             game.p2Choice = choice
         else:
             return Response({'error': 'Invalid player ID'}, status=403)
@@ -134,11 +150,11 @@ class GameRoundResult(APIView):
         if not game.both_guessed():
             return Response({'message': 'Waiting on player selections'}, status=204)
         
-        if game.p1ID == player_id:
+        if game.p1_id == player_id:
             game.p1Seen = True
             req_choice = game.p1Choice
             oth_choice = game.p2Choice
-        elif game.p2ID == player_id:
+        elif game.p2_id == player_id:
             game.p2Seen = True
             req_choice = game.p2Choice
             oth_choice = game.p1Choice
@@ -172,9 +188,9 @@ class GameFinalize(APIView):
         except Player.DoesNotExist:
             return Response({'error': 'Player not found'}, status=404)
         
-        if player_id == game.p1ID:
+        if player_id == game.p1_id:
             game.p1Finalize = True
-        elif player_id == game.p2ID:
+        elif player_id == game.p2_id:
             game.p2Finalize = True
         else:
             return Response({'error': 'Player not found in game'}, status=404)

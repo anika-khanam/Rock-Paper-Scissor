@@ -18,8 +18,8 @@ class Player(models.Model):
             return self.playerName
         
 class Game(models.Model):
-      p1ID = models.IntegerField()
-      p2ID = models.IntegerField()
+      p1 = models.ForeignKey(Player, on_delete=models.CASCADE, null=False,related_name='playerOneGame')
+      p2 = models.ForeignKey(Player, on_delete=models.CASCADE, null=False,related_name='playerTwoGame')
       p1Choice = models.CharField(max_length=8, blank=True)
       p2Choice = models.CharField(max_length=8, blank=True)
       p1Seen = models.BooleanField(default=False)
@@ -40,9 +40,9 @@ class Game(models.Model):
 class GameRoom(models.Model):
       roomCode = models.AutoField(primary_key=True)
       isPrivate = models.BooleanField(default=False)
-      p1ID = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerOne')
-      p2ID =  models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerTwo')
-      gameID = models.ForeignKey(Game,on_delete=models.SET_NULL,null=True)
+      p1 = models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerOneRoom')
+      p2 =  models.ForeignKey(Player, on_delete=models.SET_NULL, null=True,related_name='playerTwoRoom')
+      game = models.ForeignKey(Game,on_delete=models.SET_NULL,null=True)
 
       def __str__(self) :
             return self.roomCode
