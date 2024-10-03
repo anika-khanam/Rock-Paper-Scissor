@@ -3,6 +3,7 @@
 /node_modules
 .vscode/
 __pycache__/
+**/env/
 
 *.py[cod]
 *.DS_Store
