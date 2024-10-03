@@ -35,7 +35,7 @@ const WelcomePage = () => {
       <ToastContainer />
       <h1>Welcome, {username}!</h1>
       <p>You are now signed in.</p>
-      <button onClick={() => navigate('/game')}>Start Playing</button>
+      <button onClick={() => navigate('/gamehub')}>Start Playing</button>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
