@@ -1,9 +1,6 @@
-from django.urls import path
-from .views import RegisterView, CheckUserView, guest_view
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib import admin
-from django.urls import path,include
-from rest_framework_simplejwt.views import TokenObtainPairView
+from django.urls import path
 from .views import *
 
 
@@ -12,7 +9,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',PlayerAccountList.as_view()),
     path('register/', RegisterView.as_view(), name='register'),
-    path('login/', TokenObtainPairView.as_view(), name='login'),  
+    path('token/', TokenObtainPairView.as_view(), name='token'),  
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),  
     path('loggedin/', CheckUserView.as_view(), name='loggedin'), 
     path('guest/', guest_view, name='guest'), 
     path('accounts/',PlayerAccountList.as_view(), name='player_account_list'),

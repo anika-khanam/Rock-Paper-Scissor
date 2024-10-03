@@ -19,9 +19,16 @@ const LoginPage = () => {
     e.preventDefault();
     axios.post('http://127.0.0.1:8000/login/', credentials)
       .then(response => {
-        const { access, username } = response.data;
-        localStorage.setItem('accessToken', access); 
+        console.log(response.data);
+        const { refresh_token, access_token, username, user_id } = response.data;
+        console.log(refresh_token, access_token, username, user_id);
+        localStorage.setItem('access_token', access_token); 
+        localStorage.setItem('refresh_token', refresh_token); 
         localStorage.setItem('username', username); 
+        localStorage.setItem('user_id', user_id); 
+
+        axios.defaults.headers.common['Authorization'] = 
+                                         `Bearer ${access_token}`;
         toast.success('You are logged in successfully!');
         navigate('/welcome'); 
       })
