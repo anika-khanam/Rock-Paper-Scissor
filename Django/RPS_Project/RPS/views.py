@@ -110,6 +110,7 @@ class ForgotPasswordView(generics.GenericAPIView):
             return Response({'error': 'Email not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class PlayerAccountList(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = PlayerAccountSerializer
 
     def get_queryset(self):
@@ -117,10 +118,12 @@ class PlayerAccountList(generics.ListCreateAPIView):
         return queryset
 
 class PlayerAccountDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = PlayerAccountSerializer
     queryset = PlayerAccount.objects.all()
 
 class PlayerList(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
 
@@ -129,10 +132,12 @@ class PlayerList(generics.ListCreateAPIView):
         return queryset
 
 class PlayerDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
 
 class PlayerLeaderboard(generics.ListAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = LeaderboardSerializer
 
     def get_queryset(self):

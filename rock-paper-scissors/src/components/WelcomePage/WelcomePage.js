@@ -6,12 +6,15 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const WelcomePage = () => {
   const [username, setUsername] = useState('');
+  const [userID,setUserId] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username'); 
+    const storedId = localStorage.getItem('user_id')
     if (storedUsername) {
       setUsername(storedUsername);
+      setUserId(storedId)
     } else {
       navigate('/login'); 
     }
@@ -37,6 +40,7 @@ const WelcomePage = () => {
       <p>You are now signed in.</p>
       <button onClick={() => navigate('/gamehub')}>Start Playing</button>
       <button onClick={handleLogout}>Logout</button>
+      <button onClick={() => navigate(`/player/${userID}`)}>Edit Profile</button>
     </div>
   );
 };
