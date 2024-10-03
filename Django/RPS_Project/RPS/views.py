@@ -287,6 +287,8 @@ class GameFinalize(APIView):
         player_losses = req_json.get('losses')
         player_draws = req_json.get('draws')
 
+        
+
         if game.both_finalize():
             # Do some cleanup here like removing game and room?
             pass

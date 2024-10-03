@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
+import { setAuthToken, storeAuthToken, storeRefreshToken } from '../utils/auth';
 import './LoginPage.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,18 +18,18 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://127.0.0.1:8000/login/', credentials)
+    axiosInstance.post('login/', credentials)
       .then(response => {
         console.log(response.data);
         const { refresh_token, access_token, username, user_id } = response.data;
         console.log(refresh_token, access_token, username, user_id);
-        localStorage.setItem('access_token', access_token); 
-        localStorage.setItem('refresh_token', refresh_token); 
         localStorage.setItem('username', username); 
         localStorage.setItem('user_id', user_id); 
 
-        axios.defaults.headers.common['Authorization'] = 
-                                         `Bearer ${access_token}`;
+        storeAuthToken(access_token);
+        storeRefreshToken(refresh_token);
+        setAuthToken(access_token);
+        
         toast.success('You are logged in successfully!');
         navigate('/welcome'); 
       })

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import axiosInstance from '../utils/axiosInstance';
 import GameComponent from './Game';
 import WaitOnJoin from './WaitOnJoin';
 import './gameHub.css'
@@ -26,9 +26,9 @@ function GameHub() {
 
     const createGame = () => {
         const axPost = async () => {
-            const apiURL = `http://127.0.0.1:8000/manageroom/create/${player_id}/`;
+            console.log("ax headers: ",axiosInstance.defaults.headers);
             try{
-                const resp = await axios.post(apiURL)
+                const resp = await axiosInstance.post(`manageroom/create/${player_id}/`)
                 console.log(resp);
 
                 if (resp.status == 201){
@@ -46,9 +46,9 @@ function GameHub() {
 
     const joinGame = () => {
         const axPost = async () => {
-            const apiURL = `http://127.0.0.1:8000/manageroom/join/${joinId}/player/${player_id}/`;
+            const apiURL = `manageroom/join/${joinId}/player/${player_id}/`;
             try{
-                const resp = await axios.post(apiURL)
+                const resp = await axiosInstance.post(`manageroom/join/${joinId}/player/${player_id}/`)
                 console.log(resp);
 
                 if (resp.status == 201){

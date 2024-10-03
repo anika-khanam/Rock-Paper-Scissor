@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import axiosInstance from '../utils/axiosInstance';
 import AnimatedEllipses from '../utils/AnimatedEllipses';
 
 function WaitOnJoin({ roomID, setGameID }) {
@@ -8,9 +8,8 @@ function WaitOnJoin({ roomID, setGameID }) {
     useEffect(() => {
         const pollGame = () => {
             const axGet = async () => {
-                const apiURL = `http://127.0.0.1:8000/manageroom/poll/${roomID}/`;
                 try{
-                    const resp = await axios.get(apiURL)
+                    const resp = await axiosInstance.get(`manageroom/poll/${roomID}/`)
                     console.log(resp);
     
                     if (resp.status === 200){

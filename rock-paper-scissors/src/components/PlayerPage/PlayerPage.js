@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { Axios } from 'axios';
+import axiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import './PlayerPage.css';
 
@@ -16,7 +16,7 @@ function PlayerPage(){
     useEffect(()=>{
         try{
             const fetchPlayer = async()=>{
-                const response = await axios.get(`http://127.0.0.1:8000/players/${playerId}/`);
+                const response = await axiosInstance.get(`players/${playerId}/`);
                 const player = response.data
                 if (playerName=="")
                     setPlayerName(player.playerName)
@@ -39,7 +39,7 @@ function PlayerPage(){
         console.log(playerName)
         e.preventDefault();
 
-        const response = await axios.put(`http://127.0.0.1:8000/players/${playerId}/`,
+        const response = await axiosInstance.put(`http://127.0.0.1:8000/players/${playerId}/`,
             {playerName,Wins,Losses,accountId});
         localStorage.setItem('username',playerName)
         setIsEditing(false)

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InputSelector from './InputSelector';
-import axios from 'axios'
+import axiosInstance from '../utils/axiosInstance';
 import AnimatedEllipses from '../utils/AnimatedEllipses';
 
 class StatusNum {
@@ -35,14 +35,13 @@ function GameComponent({ gameID, playerID, completionCallback }) {
     const [losses, setLosses] = useState(0);
 
     const submitSelection = (choice) => {
-        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/select/`;
         setStatCode(StatusNum.Submission)
         setChoices([choice, null]);
 
         console.log(choice, typeof(choice))
         const axPost = async () => {
             try{
-                const resp = await axios.post(apiURL, {"choice":choice})
+                const resp = await axiosInstance.post(`gameround/${gameID}/player/${playerID}/select/`, {"choice":choice})
                 console.log(resp);
                 if (resp.status == 204){
                     console.log(resp.data.message);
@@ -64,12 +63,13 @@ function GameComponent({ gameID, playerID, completionCallback }) {
     }
 
     const terminateGame = () => {
-        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/finalize/`;
         console.log("Ending Game");
 
         const axPost = async () => {
             try{
-                const resp = await axios.post(apiURL, {"wins": wins, "losses": losses, "draws": 5 - wins - losses})
+                const resp = await axiosInstance.post(`gameround/${gameID}/player/${playerID}/finalize/`, 
+                    {"wins": wins, "losses": losses, "draws": 5 - wins - losses}
+                )
                 if (resp.status === 200) {
                     console.log("Updated server records");
                     completionCallback();
@@ -86,11 +86,10 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
     useEffect(() => {
         let pollingGet;
-        const apiURL = `http://127.0.0.1:8000/gameround/${gameID}/player/${playerID}/result/`
 
         const axGet = async () => {
             try{
-                const resp = await axios.get(apiURL)
+                const resp = await axiosInstance.get(`gameround/${gameID}/player/${playerID}/result/`)
                 if (resp.status === 204){
                     // No response keep polling
                 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ForgotPasswordPage.css';
@@ -15,7 +15,7 @@ const ForgotPasswordPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://127.0.0.1:8000/forgot-password/', { email })
+    axiosInstance.post('http://127.0.0.1:8000/forgot-password/', { email })
       .then(response => {
         toast.success('Password reset link sent to your email.');
       })
