@@ -18,7 +18,7 @@ axiosInstance.interceptors.response.use(resp => resp, async error => {
         console.log("Refreshing token")
         console.log("prev refresh token: ", getRefreshToken());
         try{
-            const response = await axios.post('token/refresh/', { refresh:getRefreshToken() });
+            const response = await axiosInstance.post('token/refresh/', { refresh:getRefreshToken() });
             if (response.status === 200) {
                 console.log("new access token: ", response.data.access);
                 console.log("new refresh token: ", response.data.refresh);
