@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
 import LeaderBoards from './components/LeaderBoardPage/LeaderBoard';
@@ -11,8 +11,15 @@ import LoginPage from './components/LoginPage/LoginPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage/ForgotPasswordPage'; 
 import { ToastContainer } from 'react-toastify';
 import WelcomePage from './components/WelcomePage/WelcomePage';
+import { getAuthToken, setAuthToken } from './components/utils/auth';
 
 const App = () => {
+  useEffect(() => {
+    const token = getAuthToken();
+    if (token){
+      setAuthToken(token);
+    }
+  }, []);
   return (
     <Router>
       <ToastContainer /> 
