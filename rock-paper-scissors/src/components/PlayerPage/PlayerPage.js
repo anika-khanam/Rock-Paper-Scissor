@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import './PlayerPage.css';
 
@@ -12,7 +12,7 @@ function PlayerPage(){
     useEffect(()=>{
         try{
             const fetchPlayer = async()=>{
-                const response = await axios.get(`http://127.0.0.1:8000/players/${playerId}/`);
+                const response = await axiosInstance.get(`players/${playerId}/`);
                 const player = response.data
                 setPlayerName(player.playerName)
                 setWins(player.wins)

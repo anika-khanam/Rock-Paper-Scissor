@@ -1,5 +1,5 @@
 import React, { useEffect,useState} from "react";
-import axios from 'axios';
+import axiosInstance from "../utils/axiosInstance";
 import './LeaderBoardPage.css'
 
 
@@ -9,7 +9,7 @@ function LeaderBoards(){
 
     useEffect(()=>{
         const fetchLeaderBoards = async()=>{
-            const response = await axios.get('http://127.0.0.1:8000/leaderboard/');
+            const response = await axiosInstance.get('leaderboard/');
             setLeaderBoard(response.data)
         };
         fetchLeaderBoards();

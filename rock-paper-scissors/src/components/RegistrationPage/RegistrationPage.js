@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 import './RegistrationPage.css';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,7 +26,7 @@ const RegistrationPage = () => {
       return;
     }
 
-    axios.post('http://127.0.0.1:8000/register/', {
+    axiosInstance.post('register/', {
       username: formData.username,
       email: formData.email,
       password: formData.password,

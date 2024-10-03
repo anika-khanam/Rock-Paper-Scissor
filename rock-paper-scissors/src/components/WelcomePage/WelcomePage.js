@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WelcomePage.css';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
 
 const WelcomePage = () => {
@@ -19,7 +19,7 @@ const WelcomePage = () => {
 
   const handleLogout = () => {
     console.log(localStorage.getItem('refresh_token'), localStorage.getItem('access_token'))
-    axios.post('http://127.0.0.1:8000/logout/', {refresh_token: localStorage.getItem('refresh_token')}, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
+    axiosInstance.post('logout/', {refresh_token: localStorage.getItem('refresh_token')})
       .then(response => {
         localStorage.clear();
         toast.success('You are logged out successfully!');
