@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
     baseURL: "http://127.0.0.1:8000/"
 })
 
+// Uncomment to log all axios request headers
 // axiosInstance.interceptors.request.use(request => {
 //     console.log('Request Headers:', request.headers);
 //     return request;

@@ -18,6 +18,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setAuthToken();
     axiosInstance.post('login/', credentials)
       .then(response => {
         console.log(response.data);
@@ -29,7 +30,7 @@ const LoginPage = () => {
         storeAuthToken(access_token);
         storeRefreshToken(refresh_token);
         setAuthToken(access_token);
-        
+
         toast.success('You are logged in successfully!');
         navigate('/welcome'); 
       })
