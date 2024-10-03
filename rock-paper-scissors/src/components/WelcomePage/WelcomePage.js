@@ -23,7 +23,7 @@ const WelcomePage = () => {
 
   return (
     <div className="welcome-container">
-      <h1>Welcome, {username}!</h1>
+      <h1>Welcome</h1>
       <p>You are now signed in.</p>
       <button onClick={() => navigate('/game')}>Start Playing</button>
       <button onClick={handleLogout}>Logout</button>
