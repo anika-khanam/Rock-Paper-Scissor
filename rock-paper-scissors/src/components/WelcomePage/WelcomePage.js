@@ -18,7 +18,7 @@ const WelcomePage = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    axios.post('http://127.0.0.1:8000/logout/', {refresh_token: localStorage.getItem('refreshToken')})
+    axios.post('http://127.0.0.1:8000/logout/', {refresh_token: localStorage.getItem('refresh_token')})
       .then(response => {
         localStorage.clear();
         toast.success('You are logged out successfully!');

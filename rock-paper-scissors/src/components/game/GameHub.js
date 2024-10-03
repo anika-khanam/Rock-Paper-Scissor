@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import GameComponent from './Game';
 import WaitOnJoin from './WaitOnJoin';
@@ -8,8 +9,20 @@ function GameHub() {
     const [statusinfo, setStatusinfo] = useState("");
     const [joinId, setJoinId] = useState("");
     const [player_id, setPlayer_id] = useState("");
+    const [username, setUsername] = useState('');
     const [roomID, setRoomID] = useState(null);
     const [gameID, setGameID] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const storeduid = localStorage.getItem('user_id'); 
+        if (storeduid) {
+            setPlayer_id(storeduid);
+            setUsername(localStorage.getItem("username"));
+        } else {
+          navigate('/login'); 
+        }
+      }, [navigate]);
 
     const createGame = () => {
         const axPost = async () => {
@@ -63,8 +76,7 @@ function GameHub() {
              roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : 
             <div id='hubSelect'>
                 <div className="inputLabel">
-                    <label htmlFor='playerIDInput'>Player ID: </label>
-                    <input id='playerIDInput' onChange={(e) => setPlayer_id(e.target.value)}></input>
+                    Hello {username}!
                 </div>
                 <button className='GameHubButton' onClick={ createGame }>Create Room</button>
                 <div className="inputLabel">
