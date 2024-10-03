@@ -18,7 +18,8 @@ const WelcomePage = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    axios.post('http://127.0.0.1:8000/logout/', {refresh_token: localStorage.getItem('refresh_token')})
+    console.log(localStorage.getItem('refresh_token'), localStorage.getItem('access_token'))
+    axios.post('http://127.0.0.1:8000/logout/', {refresh_token: localStorage.getItem('refresh_token')}, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
       .then(response => {
         localStorage.clear();
         toast.success('You are logged out successfully!');
