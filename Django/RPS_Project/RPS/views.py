@@ -281,13 +281,24 @@ class GameFinalize(APIView):
         else:
             return Response({'error': 'Player not found in game'}, status=404)
 
-        # Currently not doing anything with these stats but can be recorded somewhere
+        # Record game stats for given player
         req_json = json.loads(request.body.decode('utf-8'))
         player_wins = req_json.get('wins')
         player_losses = req_json.get('losses')
         player_draws = req_json.get('draws')
 
+        if player_wins > player_losses:
+            player.wins += 1
+        elif player_losses > player_wins:
+            player.losses += 1
+        else:
+            player.draws += 1
         
+        player.roundwins += player_wins
+        player.rounddraws += player_draws
+        player.roundlosses += player_losses
+
+        player.save()
 
         if game.both_finalize():
             # Do some cleanup here like removing game and room?

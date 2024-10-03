@@ -11,7 +11,11 @@ class PlayerAccount(models.Model):
 class Player(models.Model):
       playerName = models.CharField(max_length=255)
       wins = models.IntegerField(default=0)
+      draws = models.IntegerField(default=0)
       losses = models.IntegerField(default=0)
+      roundwins = models.IntegerField(default=0)
+      rounddraws = models.IntegerField(default=0)
+      roundlosses = models.IntegerField(default=0)
       userID = models.ForeignKey(PlayerAccount,on_delete=models.CASCADE,null=True)
 
       def __str__(self):
