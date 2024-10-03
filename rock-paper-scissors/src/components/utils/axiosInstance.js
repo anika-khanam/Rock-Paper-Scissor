@@ -25,6 +25,7 @@ axiosInstance.interceptors.response.use(resp => resp, async error => {
                 storeAuthToken(response.data.access);
                 storeRefreshToken(response.data.refresh);
                 setAuthToken(response.data.access);
+                origRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
                 return axios(origRequest);
             }
         }
