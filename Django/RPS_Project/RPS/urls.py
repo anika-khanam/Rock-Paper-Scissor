@@ -22,6 +22,7 @@ urlpatterns = [
     path('gameround/<int:game_id>/player/<int:player_id>/result/', GameRoundResult.as_view()),
     path('gameround/<int:game_id>/player/<int:player_id>/finalize/', GameFinalize.as_view()),
     path('manageroom/create/<int:player_id>/', CreateRoom.as_view()),
+    path('manageroom/delete/<int:room_id>/', DeleteRoom.as_view()),
     path('manageroom/join/<int:room_id>/player/<int:player_id>/', JoinRoom.as_view()),
     path('manageroom/poll/<int:room_id>/',QueryGame.as_view()),
     path('leaderboard/',PlayerLeaderboard.as_view()),

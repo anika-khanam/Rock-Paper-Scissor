@@ -52,7 +52,6 @@ class GameRoom(models.Model):
 
       def __str__(self) :
             return f"Code: {self.roomCode}, P1: {self.p1}, P2:{self.p2}"
-            return str(self.roomCode)
 
       def room_full(self):
         return self.p1ID is not None and self.p1ID is not None

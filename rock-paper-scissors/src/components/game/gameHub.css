@@ -21,3 +21,8 @@ button:disabled, button:hover:disabled{
     cursor: not-allowed;
     background-color: #61dafb;
 }
+
+.pageDiv{
+    text-align: center;
+    padding-top: 10px;
+}

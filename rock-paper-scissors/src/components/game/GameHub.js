@@ -74,9 +74,10 @@ function GameHub() {
         <>
         
             {gameID != null ? <GameComponent gameID={gameID} playerID={player_id} completionCallback={finishGame}/> : 
-             roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : 
+             roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID} cancelCallback={finishGame}/> : 
             <div id='hubSelect'>
                 <NavigationButtons />
+                <h1>Game Hub</h1>
                 <div className="inputLabel">
                     Hello {username}!
                 </div>
@@ -86,11 +87,6 @@ function GameHub() {
                     <input id='roomIDInput' onChange={(e) => setJoinId(e.target.value)}></input>
                 </div>
                 <button className='GameHubButton' onClick={ joinGame }>Join Room</button>
-                <div id="debugInfo">
-                    <span>Status: { statusinfo }</span><br />
-                    <span>Room Code: { roomID }</span><br />
-                    <span>Game ID: { gameID }</span>
-                </div>
             </div>}
         </> 
     );

@@ -161,6 +161,17 @@ class CreateRoom(APIView):
 
         return Response({"message": "Room created successfully", "room_id":room.roomCode}, status=201)
 
+class DeleteRoom(APIView):
+    def delete(self, request, room_id):
+        try:
+            room = GameRoom.objects.get(roomCode=room_id)
+        except GameRoom.DoesNotExist:
+            return Response({'error': 'Room not found'}, status=404)
+        
+        room.delete()
+
+        return Response({"message": "Room deleted"}, status=200)
+
 class JoinRoom(APIView):
     def post(self, request, room_id, player_id):
         try:
