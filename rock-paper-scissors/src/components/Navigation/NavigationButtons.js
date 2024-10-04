@@ -29,9 +29,10 @@ function NavigationButtons() {
             {userID !== null && 
             <>
             <button className={location.pathname===`/player/${userID}` ? 'active' : 'inactive'} onClick={() => navigate(`/player/${userID}`)}>Edit Profile</button>
-            </>}
             <button className={location.pathname==='/leaderboard' ? 'active' : 'inactive'} onClick={() => navigate(`/leaderboard`)}>Leaderboards</button>
             <button onClick={handleLogout}>Logout</button>
+            </>}
+            <button className={location.pathname==='/leaderboard' ? 'active' : 'inactive'} onClick={() => navigate(`/leaderboard`)}>Leaderboards</button>
         </> 
     );
 }
