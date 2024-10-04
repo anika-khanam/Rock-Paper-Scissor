@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../utils/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
 
 function NavigationButtons() {
     const [userID, setuserID] = useState(localStorage.getItem("user_id"));
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        console.log(location.pathname);
+    })
 
     const handleLogout = () => {
         console.log(localStorage.getItem('refresh_token'), localStorage.getItem('access_token'));
@@ -24,12 +29,12 @@ function NavigationButtons() {
         <>
             <ToastContainer />
             {userID === null && <button onClick={() => navigate('/')}>Home</button>}
-            <button onClick={() => navigate('/gamehub')}>Start Playing</button>
+            <button className={location.pathname==='/gamehub' ? 'active' : 'inactive'} onClick={() => navigate('/gamehub')}>Start Playing</button>
             {userID !== null && 
             <>
-            <button onClick={() => navigate(`/player/${userID}`)}>Edit Profile</button>
+            <button className={location.pathname===`/player/${userID}` ? 'active' : 'inactive'} onClick={() => navigate(`/player/${userID}`)}>Edit Profile</button>
             </>}
-            <button onClick={() => navigate(`/leaderboard`)}>Leaderboards</button>
+            <button className={location.pathname==='/leaderboard' ? 'active' : 'inactive'} onClick={() => navigate(`/leaderboard`)}>Leaderboards</button>
             <button onClick={handleLogout}>Logout</button>
         </> 
     );
