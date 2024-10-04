@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import './PlayerPage.css';
+import NavigationButtons from "../Navigation/NavigationButtons";
 
 function PlayerPage(){
     const{playerId} = useParams();
@@ -32,7 +33,7 @@ function PlayerPage(){
         if (playerId==localStorage.getItem('user_id')){
             setIsPlayer(true)
         }
-    })
+    }, [])
 
 
     const handleSubmit = async(e) => {
@@ -69,6 +70,7 @@ function PlayerPage(){
                         <h2>Wins: {Wins}</h2>
                         <h2>Losses: {Losses}</h2>
                     </div>
+                    <NavigationButtons />
                 </>
 
             )
@@ -85,6 +87,7 @@ function PlayerPage(){
                         <h2>Wins: {Wins}</h2>
                         <h2>Losses: {Losses}</h2>
                     </div>
+                    <NavigationButtons />
                 </>
             )
         }
@@ -99,6 +102,7 @@ function PlayerPage(){
                 <h2>Wins: {Wins}</h2>
                 <h2>Losses: {Losses}</h2>
             </div>
+            <NavigationButtons />
             </>
         )
     }

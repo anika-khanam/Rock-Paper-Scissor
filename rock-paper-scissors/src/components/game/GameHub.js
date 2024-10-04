@@ -4,6 +4,7 @@ import axiosInstance from '../utils/axiosInstance';
 import GameComponent from './Game';
 import WaitOnJoin from './WaitOnJoin';
 import './gameHub.css'
+import NavigationButtons from '../Navigation/NavigationButtons';
 
 function GameHub() {
     const [statusinfo, setStatusinfo] = useState("");
@@ -75,6 +76,7 @@ function GameHub() {
             {gameID != null ? <GameComponent gameID={gameID} playerID={player_id} completionCallback={finishGame}/> : 
              roomID != null ? <WaitOnJoin roomID={roomID} setGameID={setGameID}/> : 
             <div id='hubSelect'>
+                <NavigationButtons />
                 <div className="inputLabel">
                     Hello {username}!
                 </div>
