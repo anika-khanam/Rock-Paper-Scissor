@@ -118,7 +118,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
                 setTimeout(() => {
                     setRound(round + 1)
                     setStatCode(StatusNum.AwaitingSubmit)
-                }, 3000);
+                }, 1000);
             }
             else{
                 // Game End
@@ -137,9 +137,9 @@ function GameComponent({ gameID, playerID, completionCallback }) {
                 return (
                     <>
                         <InputSelector submitCallback={submitSelection}/>
-                        <ul>
-                            <li>You Chose: {choices[0]}, Your opponent chose: {choices[1]}</li>
-                            <li>{ status }</li>
+                        <ul style={{listStyleType: "none"}}>
+                            {choices[0] !== null && <li>You Chose: {choices[0]}, Your opponent chose: {choices[1]}</li>}
+                            {status!=='' && <li>Status: { status }</li>}
                         </ul>
                     </>
                 );
@@ -170,13 +170,13 @@ function GameComponent({ gameID, playerID, completionCallback }) {
     }
 
     return (
-        <>
+        <div style={{textAlign: 'center'}}>
             <p>Round {round} (Best of 5)</p>
             <p>Wins: {wins}</p>
             <p>Losses: {losses}</p>
             {statCode != StatusNum.ResultDisplay ? <p>Draws: {(round - 1) - wins - losses}</p> : <p>Draws: {round - wins - losses}</p> }
             {renderBody()}
-        </>
+        </div>
         
     );
 }
