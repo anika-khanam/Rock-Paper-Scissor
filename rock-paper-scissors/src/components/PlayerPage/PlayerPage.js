@@ -39,7 +39,7 @@ function PlayerPage(){
         console.log(playerName)
         e.preventDefault();
 
-        const response = await axiosInstance.put(`http://127.0.0.1:8000/players/${playerId}/`,
+        const response = await axiosInstance.put(`players/${playerId}/`,
             {playerName,Wins,Losses,accountId});
         localStorage.setItem('username',playerName)
         setIsEditing(false)
