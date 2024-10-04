@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../utils/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,10 +7,6 @@ function NavigationButtons() {
     const [userID, setuserID] = useState(localStorage.getItem("user_id"));
     const navigate = useNavigate();
     const location = useLocation();
-
-    useEffect(() => {
-        console.log(location.pathname);
-    })
 
     const handleLogout = () => {
         console.log(localStorage.getItem('refresh_token'), localStorage.getItem('access_token'));
