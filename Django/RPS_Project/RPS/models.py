@@ -30,6 +30,7 @@ class Game(models.Model):
       p2Seen = models.BooleanField(default=False)
       p1Finalize = models.BooleanField(default=False)
       p2Finalize = models.BooleanField(default=False)
+      terminated = models.BooleanField(default=False)
 
       def both_guessed(self):
             return self.p1Choice and self.p2Choice

@@ -244,6 +244,9 @@ class GameRoundResult(APIView):
         except Game.DoesNotExist:
             return Response({'error': 'Game not found'}, status=404)
         
+        if game.terminated:
+            return Response({'message': 'Game was terminated'}, status=202)
+
         if not game.both_guessed():
             return Response({'message': 'Waiting on player selections'}, status=204)
         
@@ -316,3 +319,26 @@ class GameFinalize(APIView):
             pass
 
         return Response({"message": "Game stats recorded"}, status=200)
+    
+class GameTerminate(APIView):
+    def post(self, request, game_id, player_id):
+        try:
+            game = Game.objects.get(id=game_id)
+        except Game.DoesNotExist:
+            return Response({'error': 'Game not found'}, status=404)
+        
+        try:
+            player = Player.objects.get(id=player_id)
+        except Player.DoesNotExist:
+            return Response({'error': 'Player not found'}, status=404)
+        
+        player.losses += 1
+        player.save()
+
+        game.p2.wins += 1
+        game.p2.save()
+
+        game.terminated = True
+        game.save()
+
+        return Response({"message": "Game marked as terminated"}, status=200)

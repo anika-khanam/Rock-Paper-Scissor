@@ -8,6 +8,7 @@ class StatusNum {
     static Submission = 1;
     static PollingSubmit = 2;
     static ResultDisplay = 3;
+    static GameTerminated = 4;
     static GameEnd = 5;
 }
 
@@ -84,6 +85,29 @@ function GameComponent({ gameID, playerID, completionCallback }) {
         axPost();
     }
 
+    const quitConfirm = () => {
+        if (window.confirm("Quitting will forfeit the match, hit OK to proceed or Cancel to continue")){
+            forfeitGame()
+        }
+    }
+
+    const forfeitGame = () => {
+        const axPost = async () => {
+            try {
+                const resp = await axiosInstance.post(`gameround/${gameID}/player/${playerID}/terminate/`);
+
+                if (resp.status === 200){
+                    console.log("Terminated Game");
+                    completionCallback();
+                }
+            } catch (err) {
+                console.error(err);
+                setStatus("Failed");
+            }
+        }
+        axPost();
+    }
+
     useEffect(() => {
         let pollingGet;
 
@@ -92,6 +116,12 @@ function GameComponent({ gameID, playerID, completionCallback }) {
                 const resp = await axiosInstance.get(`gameround/${gameID}/player/${playerID}/result/`)
                 if (resp.status === 204){
                     // No response keep polling
+                }
+
+                if (resp.status === 202){
+                    // Game terminated
+                    setStatCode(StatusNum.GameTerminated);
+                    clearInterval(pollingGet);
                 }
 
                 if (resp.status === 200){
@@ -164,6 +194,13 @@ function GameComponent({ gameID, playerID, completionCallback }) {
                         <button onClick={terminateGame}>Return to Menu</button>
                     </>
                 )
+            case StatusNum.GameTerminated:
+                return (
+                    <>
+                        <p>Other user quit, you have been awarded the win!</p>
+                        <button onClick={completionCallback}>Return to Menu</button>
+                    </>
+                )
             default:
                 break;
         }
@@ -171,6 +208,7 @@ function GameComponent({ gameID, playerID, completionCallback }) {
 
     return (
         <div style={{textAlign: 'center'}}>
+            {statCode !== StatusNum.GameEnd && <><button onClick={quitConfirm}>Quit</button><br /></>}
             <p>Round {round} (Best of 5)</p>
             <p>Wins: {wins}</p>
             <p>Losses: {losses}</p>
